@@ -34,3 +34,32 @@
 ### 设置
 
 - 该功能尚未开发
+
+## 关于程序
+
+### 源代码
+
+本程序是开源的，但目前并未完善，暂不提供源代码。
+
+### 环境说明
+
+以下列出建议的运行环境
+> Runtime: Microsoft Visual C++ 2015-2019 Redistributable
+> System: Windows 10 / Windows 11
+> RAM: 64MB+ (free)
+如果您下载的是单文件版本，则需要附加QT运行时库
+
+### 制作与版权
+
+#### 程序制作者
++ 代码逻辑/UI界面: jmydaniel 100%
++ 内部图标提供方: iconfont (https://www.iconfont.cn/)
+
+#### 版权与许可证
+
+本程序使用以下编译器或支持库
+
++ VisualStudio 2022
++ QT 6.2.2
+
+详细许可证内容请参阅其对应的官方网站
