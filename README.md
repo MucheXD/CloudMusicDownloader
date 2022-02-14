@@ -57,7 +57,7 @@
 
 #### 程序制作者
 
-+ 代码逻辑/UI界面: jmydaniel 100%
++ 代码逻辑/UI界面: MucheXD 100%
 
 + 内部图标提供方: iconfont (https://www.iconfont.cn/)
 
