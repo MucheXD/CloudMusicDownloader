@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>workInfoWClass</class>
+ <widget class="QWidget" name="workInfoWClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>585</width>
+    <height>30</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="rootWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>585</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget
+{
+	background-color: #fafafa;
+	font: 10pt &quot;微软雅黑&quot;;
+	border-width: 2px;
+	border-color: #ebeef0;
+	border-style: solid;
+	border-radius: 8px;
+}
+QWidget[style=&quot;error&quot;]
+{
+	background-color: #faf5f5;
+	font: 10pt &quot;微软雅黑&quot;;
+	border-width: 2px;
+	border-color: #f0c1c1;
+	border-style: solid;
+	border-radius: 8px;
+}</string>
+   </property>
+   <property name="style" stdset="0">
+    <string>normal</string>
+   </property>
+   <widget class="QLabel" name="text_title">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>5</y>
+      <width>30</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 10pt &quot;微软雅黑&quot;;
+border-width: 0px;
+background-color: rgba(255, 255, 255, 0);</string>
+    </property>
+    <property name="text">
+     <string>标题</string>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="text_workInfo">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>5</y>
+      <width>500</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel
+{
+	font: 10pt &quot;微软雅黑&quot;;
+	color: #c0c4c8;
+	border-width: 0px;
+	background-color: rgba(255, 255, 255, 0);
+}
+QLabel[style=&quot;error&quot;]
+{
+	font: 10pt &quot;微软雅黑&quot;;
+	color: #c85252;
+	border-width: 0px;
+	background-color: rgba(255, 255, 255, 0);
+}</string>
+    </property>
+    <property name="text">
+     <string> 等待中</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+    <property name="style" stdset="0">
+     <string notr="true">normal</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar_workProgress">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>585</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar
+{
+	border-width: 2px;
+	border-color: rgba(255, 255, 255, 0);
+	border-style: solid;
+	border-radius: 8px;
+	background-color: rgba(255, 255, 255, 0);
+}
+
+QProgressBar::chunk
+{
+	width: 1;
+	background-color: #ebf0f5;
+}</string>
+    </property>
+    <property name="maximum">
+     <number>1000</number>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <zorder>progressBar_workProgress</zorder>
+   <zorder>text_title</zorder>
+   <zorder>text_workInfo</zorder>
+  </widget>
+ </widget>
+ <resources>
+  <include location="LUD.qrc"/>
+ </resources>
+ <connections/>
+</ui>

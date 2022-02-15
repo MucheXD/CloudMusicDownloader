@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="drop-arrow-down">Resource/icons/drop-arrow-down.svg</file>
+        <file alias="drop-arrow-up">Resource/icons/drop-arrow-up.svg</file>
+        <file alias="checkbox-enabled-checked">Resource/icons/checkbox-enabled-checked.svg</file>
+        <file alias="checkbox-disabled-checked">Resource/icons/checkbox-disabled-checked.svg</file>
+        <file alias="checkbox-enabled-unchecked">Resource/icons/checkbox-enabled-unchecked.svg</file>
+        <file alias="checkbox-disabled-unchecked">Resource/icons/checkbox-disabled-unchecked.svg</file>
+        <file alias="checkbox-enabled-unchecked-hover">Resource/icons/checkbox-enabled-unchecked-hover.svg</file>
+        <file alias="checkbox-enabled-checked-hover">Resource/icons/checkbox-enabled-checked-hover.svg</file>
+        <file alias="arrow-right">Resource/icons/arrow-right.svg</file>
+    </qresource>
+</RCC>

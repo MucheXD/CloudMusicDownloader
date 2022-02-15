@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>workWidget_list_Class</class>
+ <widget class="QWidget" name="workWidget_list_Class">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #f5f8fa;
+font: 10pt &quot;微软雅黑&quot;;</string>
+  </property>
+  <widget class="QLabel" name="text_title">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #ffffff;
+background-color: #0064c8;
+padding: 0px 0px 0px 10px;
+font: 11pt &quot;微软雅黑&quot;;</string>
+   </property>
+   <property name="text">
+    <string>选取列表</string>
+   </property>
+  </widget>
+  <widget class="QScrollArea" name="songListTable">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>89</y>
+     <width>620</width>
+     <height>311</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QScrollArea
+{
+	background-color: #fafafa;
+	border-width: 0px;
+	border-style: none;
+}
+QScrollBar:vertical
+{
+    background: #fafafa;
+    padding: 12px 3px 12px 3px;
+}
+QScrollBar::handle:vertical
+{
+    background: #c0c5c8;
+    border-radius: 2px; 
+}
+QScrollBar::handle:vertical:hover
+{
+    background: #acb1b4; 
+}
+QScrollBar::add-line:vertical
+{
+	height:12px;
+	width:12px;
+    border-image:url(:/icons/drop-arrow-down);
+    subcontrol-position:bottom;
+}
+QScrollBar::sub-line:vertical
+{
+    height:12px;
+	width:12px;
+    image:url(:/icons/drop-arrow-up);
+    subcontrol-position:top;
+}</string>
+   </property>
+   <property name="lineWidth">
+    <number>0</number>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>620</width>
+      <height>311</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="btn_startDownload">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>45</y>
+     <width>91</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton 
+{
+	color: #ffffff;
+	background-color: #0064c8;
+	border-width: 2px;
+	border-color: #146ec8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #c8c8c8;
+	border-color: #c8c8c8;
+}
+
+QPushButton:hover
+{
+	background-color: #146ec8;
+	border-width: 2px;
+	border-color: #2778c8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed 
+{
+	background-color: #2778c8;
+	border-color: #2778c8;
+	border-bottom-color: #0064c8;
+}</string>
+   </property>
+   <property name="text">
+    <string>开始下载</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_clearTable">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>45</y>
+     <width>90</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton 
+{
+	color: #000000;
+	background-color: #f0f3f5;
+	border-width: 2px;
+	border-color: #ebf0f5;
+	border-bottom-color: #d4dae1;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #f0f0f0;
+	border-color:  #f0f0f0;
+}
+
+QPushButton:hover
+{
+	background-color: #e7ebf0;
+	border-width: 2px;
+	border-color: #e2e7eb;
+	border-bottom-color: #cacdd2;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-bottom-color: #dce4eb;
+}r</string>
+   </property>
+   <property name="text">
+    <string>清空列表</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_chooseAll">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>45</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox
+{
+	color: #000000;
+	background-color: #f0f3f5;
+	border-width: 2px;
+	border-color: #ebf0f5;
+	border-bottom-color: #d4dae1;
+	border-style: solid;
+	border-radius: 5px;
+}
+QCheckBox::indicator 
+{ 
+	left: 15px;
+    width: 14px;
+    height: 14px;
+}
+QCheckBox::indicator:enabled:unchecked 
+{ 
+	image: url(:/icons/checkbox-enabled-unchecked);
+}
+QCheckBox::indicator:enabled:unchecked:hover
+{ 
+	image: url(:/icons/checkbox-enabled-unchecked-hover);
+}
+QCheckBox::indicator:enabled:checked:hover
+{ 
+	image: url(:/icons/checkbox-enabled-checked-hover);
+}
+QCheckBox::indicator:enabled:checked 
+{ 
+	image: url(:/icons/checkbox-enabled-checked);
+}
+QCheckBox::indicator:disabled:unchecked 
+{ 
+	image: url(:/icons/checkbox-disabled-unchecked);
+}
+QCheckBox::indicator:disabled:checked 
+{ 
+	image: url(:/icons/checkbox-disabled-checked);
+}
+</string>
+   </property>
+   <property name="text">
+    <string>全选</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="tristate">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_getSongInfo">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>45</y>
+     <width>90</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton 
+{
+	color: #000000;
+	background-color: #f0f3f5;
+	border-width: 2px;
+	border-color: #ebf0f5;
+	border-bottom-color: #d4dae1;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #f0f0f0;
+	border-color:  #f0f0f0;
+}
+
+QPushButton:hover
+{
+	background-color: #e7ebf0;
+	border-width: 2px;
+	border-color: #e2e7eb;
+	border-bottom-color: #cacdd2;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-bottom-color: #dce4eb;
+}r</string>
+   </property>
+   <property name="text">
+    <string>匹配信息</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="LUD.qrc"/>
+ </resources>
+ <connections/>
+</ui>

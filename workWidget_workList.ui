@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>workWidget_workList_Class</class>
+ <widget class="QWidget" name="workWidget_workList_Class">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #f5f8fa;
+font: 10pt &quot;微软雅黑&quot;;</string>
+  </property>
+  <widget class="QLabel" name="text_title">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #ffffff;
+background-color: #0064c8;
+padding: 0px 0px 0px 10px;
+font: 11pt &quot;微软雅黑&quot;;
+</string>
+   </property>
+   <property name="text">
+    <string>工作列表</string>
+   </property>
+  </widget>
+  <widget class="QScrollArea" name="workInfoTable">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>90</y>
+     <width>620</width>
+     <height>310</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QScrollArea
+{
+	background-color: #fafafa;
+	border-width: 0px;
+	border-style: none;
+}
+QScrollBar:vertical
+{
+    background: #fafafa;
+    padding: 12px 3px 12px 3px;
+}
+QScrollBar::handle:vertical
+{
+    background: #c0c5c8;
+    border-radius: 2px; 
+}
+QScrollBar::handle:vertical:hover
+{
+    background: #acb1b4; 
+}
+QScrollBar::add-line:vertical
+{
+	height:12px;
+	width:12px;
+    border-image:url(:/icons/drop-arrow-down);
+    subcontrol-position:bottom;
+}
+QScrollBar::sub-line:vertical
+{
+    height:12px;
+	width:12px;
+    image:url(:/icons/drop-arrow-up);
+    subcontrol-position:top;
+}</string>
+   </property>
+   <property name="lineWidth">
+    <number>0</number>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>620</width>
+      <height>310</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="btn_openDir">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>45</y>
+     <width>90</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton 
+{
+	color: #ffffff;
+	background-color: #0064c8;
+	border-width: 2px;
+	border-color: #146ec8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #c8c8c8;
+	border-color: #c8c8c8;
+}
+
+QPushButton:hover
+{
+	background-color: #146ec8;
+	border-width: 2px;
+	border-color: #2778c8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed 
+{
+	background-color: #2778c8;
+	border-color: #2778c8;
+	border-bottom-color: #0064c8;
+}</string>
+   </property>
+   <property name="text">
+    <string>打开目录</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>searchResultWClass</class>
+ <widget class="QWidget" name="searchResultWClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>580</width>
+    <height>50</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="rootWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>580</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #fafafa;
+font: 10pt &quot;微软雅黑&quot;;
+border-width: 2px;
+border-color: #ebeef0;
+border-style: solid;
+border-radius: 10px;</string>
+   </property>
+   <widget class="QLabel" name="text_title">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>5</y>
+      <width>120</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 10pt &quot;微软雅黑&quot;;
+border-width: 0px;
+</string>
+    </property>
+    <property name="text">
+     <string>评论过万日语歌合集</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="text_subTitle">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>5</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt &quot;微软雅黑&quot;;
+color: #c0c5c8;
+border-width: 0px;</string>
+    </property>
+    <property name="text">
+     <string>9000首</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="text_ID">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>5</y>
+      <width>100</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;微软雅黑&quot;;
+color: #c0c5c8;
+border-width: 0px;</string>
+    </property>
+    <property name="text">
+     <string>#2137987910</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="text_creator">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>25</y>
+      <width>75</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt &quot;微软雅黑&quot;;
+border-width: 0px;</string>
+    </property>
+    <property name="text">
+     <string>By 寂静和光</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="text_data">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>25</y>
+      <width>170</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt &quot;微软雅黑&quot;;
+color: #c0c5c8;
+border-width: 0px;</string>
+    </property>
+    <property name="text">
+     <string>播放 6200000 | 订阅97000</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_choose">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>20</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton 
+{
+	color: #ffffff;
+	background-color: #0064c8;
+	border-width: 2px;
+	border-color: #146ec8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #c8c8c8;
+	border-color: #c8c8c8;
+}
+
+QPushButton:hover
+{
+	background-color: #146ec8;
+	border-width: 2px;
+	border-color: #2778c8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed 
+{
+	background-color: #2778c8;
+	border-color: #2778c8;
+	border-bottom-color: #0064c8;
+}</string>
+    </property>
+    <property name="text">
+     <string>选择</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_moreInfo">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>20</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton 
+{
+	color: #000000;
+	background-color: #f0f3f5;
+	border-width: 2px;
+	border-color: #ebf0f5;
+	border-bottom-color: #d4dae1;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #f0f0f0;
+	border-color:  #f0f0f0;
+}
+
+QPushButton:hover
+{
+	background-color: #e7ebf0;
+	border-width: 2px;
+	border-color: #e2e7eb;
+	border-bottom-color: #cacdd2;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-bottom-color: #dce4eb;
+}r</string>
+    </property>
+    <property name="text">
+     <string>详细信息</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>songListWClass</class>
+ <widget class="QWidget" name="songListWClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>585</width>
+    <height>29</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="rootWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>585</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #fafafa;
+font: 10pt &quot;微软雅黑&quot;;
+border-width: 2px;
+border-color: #ebeef0;
+border-style: solid;
+border-radius: 8px;</string>
+   </property>
+   <widget class="QLabel" name="text_title">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>5</y>
+      <width>30</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 10pt &quot;微软雅黑&quot;;
+border-width: 0px;
+</string>
+    </property>
+    <property name="text">
+     <string>标题</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="text_subTitle">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>5</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt &quot;微软雅黑&quot;;
+color: #c0c5c8;
+border-width: 0px;</string>
+    </property>
+    <property name="text">
+     <string>1'40''</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="text_artists">
+    <property name="geometry">
+     <rect>
+      <x>65</x>
+      <y>5</y>
+      <width>50</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt &quot;微软雅黑&quot;;
+border-width: 0px;</string>
+    </property>
+    <property name="text">
+     <string>AAAAA</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_choose">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>7</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox
+{
+	border-width: 0px;
+	background-color: rgba(255, 255, 255, 0);
+}
+QCheckBox::indicator 
+{ 
+    width: 14px;
+    height: 14px;
+}
+QCheckBox::indicator:enabled:unchecked 
+{ 
+	image: url(:/icons/checkbox-enabled-unchecked);
+}
+QCheckBox::indicator:enabled:unchecked:hover
+{ 
+	image: url(:/icons/checkbox-enabled-unchecked-hover);
+}
+QCheckBox::indicator:enabled:checked:hover
+{ 
+	image: url(:/icons/checkbox-enabled-checked-hover);
+}
+QCheckBox::indicator:enabled:checked 
+{ 
+	image: url(:/icons/checkbox-enabled-checked);
+}
+QCheckBox::indicator:disabled:unchecked 
+{ 
+	image: url(:/icons/checkbox-disabled-unchecked);
+}
+QCheckBox::indicator:disabled:checked 
+{ 
+	image: url(:/icons/checkbox-disabled-checked);
+}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_choose">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>555</x>
+      <y>5</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton 
+{
+	color: #ffffff;
+	background-color: #0064c8;
+	border-width: 1px;
+	border-color: #146ec8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 4px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #c8c8c8;
+	border-color: #c8c8c8;
+}
+
+QPushButton:hover
+{
+	background-color: #146ec8;
+	border-color: #2778c8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+}
+
+QPushButton:pressed 
+{
+	background-color: #2778c8;
+	border-color: #2778c8;
+	border-bottom-color: #0064c8;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="LUD.qrc">
+      <normaloff>:/icons/arrow-right</normaloff>:/icons/arrow-right</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>12</width>
+      <height>12</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="LUD.qrc"/>
+ </resources>
+ <connections/>
+</ui>
