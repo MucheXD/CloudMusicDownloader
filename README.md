@@ -1,7 +1,8 @@
 # CloudMusicDownloader
-只想简单的下载一首音乐而不希望登录账号或下载客户端? CloudMusicDownloader(LUD) 可以帮助您以最简单的方式找到您想要的歌曲并以本地.mp3格式呈现给您!
 
-**请注意, CloudMusicDownloader(LUD) 不能帮助您免费获取付费歌曲, 本程序不会尝试破解网易云音乐的正常机制。**
+只想简单的保存一首音乐而不希望登录账号或下载客户端? CloudMusicDownloader(LUD) 可以帮助您以最简单的方式找到您想要的歌曲并以本地.mp3格式呈现给您!
+
+**请注意, CloudMusicDownloader(LUD)不会尝试破解网易云音乐的正常机制，你只能下载/转换自己有权播放的歌曲**
 
 **本程序仍在开发中，许多可见功能可能暂时无法使用或可能导致程序崩溃**
 
