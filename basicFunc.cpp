@@ -35,7 +35,10 @@ QString qNetwork_getHttpHeaderText( QString url, QString header, bool autoAlert)
 
 int qText_indexOfEnd(QString text, QString indexText, int p)
 {
-	return text.indexOf(indexText, p) + indexText.length();
+	if (text.indexOf(indexText, p) != -1)
+		return text.indexOf(indexText, p) + indexText.length();
+	else
+		return -1;
 }
 
 QString qText_Between(QString text, QString left, QString right, int from)
@@ -63,6 +66,28 @@ bool qFile_createDir(QString path)
 {
 	QDir dir;
 	return dir.mkdir(path);
+}
+
+QString qConfig_readKey( QString key, QString configFileName)
+{
+	QFile configFile;
+	configFile.setFileName(configFileName);
+	if (configFile.size() > 1048576)
+		return "ERROR_OOM";//如果目标配置文件大于1MB直接返回失败
+	configFile.open(QIODevice::ReadOnly);
+	QString configData = configFile.readAll();
+	return qText_Between(configData, "\"", "\"", qText_indexOfEnd(configData, key));
+}
+
+bool qConfig_writeKey(QString configFileName, QString key, QString data)
+{
+	QFile configFile;
+	configFile.setFileName(configFileName);
+	if (configFile.size() > 1048576)
+		return false;//如果目标配置文件大于1MB直接返回失败
+	configFile.open(QIODevice::ReadWrite);
+	QString configData = configFile.readAll();
+	return true;
 }
 
 TIME qTime_formatFromMs(int ms, short msb)
@@ -108,6 +133,14 @@ QString qDID_artistsStrIn_songInfo(std::vector<USERINFO> artistList, int maxLeng
 		result.append(QString(" 等%1位").arg(artistList.size()));
 	return result;
 }
+
+//void qMsgbox_info(void)
+//{
+//	msgBox* mb = new msgBox;
+//	mb->setModal(true);
+//	mb->type = 1;
+//	mb->exec();
+//}
 
 Network::Network()
 {
@@ -214,7 +247,7 @@ std::vector<SONGINFO> searchInfoParser_Songs(QString rawResult)
 	int nPos = 0;
 	nPos = qText_indexOfEnd(rawResult, "\"songs\":", 0);
 	nPos = qText_indexOfEnd(rawResult, "[", nPos);
-	while (rawResult.indexOf(",{", nPos) != -1)
+	while (rawResult.indexOf("]", nPos)-nPos != 0)
 	{
 		nPos += 1;
 		SONGINFO songInfo;
@@ -242,11 +275,13 @@ std::vector<SONGINFO> searchInfoParser_Songs(QString rawResult)
 		songInfo.mvid = qText_Between(rawResult, "\"mvid\":", ",", nPos);
 		result.push_back(songInfo);
 		nPos = qText_indexOfEnd(rawResult, "\"mvid\":", nPos);
+		nPos = qJson_findCurrentEnd(rawResult, nPos);
+		//nPos = qText_indexOfEnd(rawResult, "}", nPos);
 		/*if (type == 1)
 			nPos = qText_indexOfEnd(rawResult, "\"mark\":", nPos);
 		else if (type == 2)
 			nPos = qText_indexOfEnd(rawResult, "\"volumeDelta\":", nPos);*/
-		nPos = qJson_findCurrentEnd(rawResult, nPos);
+		
 	}
 	return result;//返回格式化后的数据
 }
@@ -296,6 +331,61 @@ std::vector<SONGINFO> songsIn_PlayList(QString rawPlayListInfo)
 		nPos = qText_indexOfEnd(rawPlayListInfo, "}", nPos);
 		nPos = qText_indexOfEnd(rawPlayListInfo, "}", nPos);
 	}
+	return result;
+}
+
+SONGINFO fillSongInfo(SONGINFO rawSongInfo)
+{
+	SONGINFO result = rawSongInfo;
+	QString getBlurPicUrl = QString("http://music.163.com/api/song/detail/?ids=[%1]").arg(rawSongInfo.id);
+	QString fullInfoText = qNetwork_getHttpText("GET", getBlurPicUrl, false);
+	result.blurPicUrl = qText_Between(fullInfoText, "blurPicUrl\":\"", "\"", 0);
+	QString getLyricsUrl = QString("https://music.163.com/api/song/lyric?id=%1&lv=1&tv=1&rv=1").arg(rawSongInfo.id);
+	QString fullLyricsText = qNetwork_getHttpText("GET", getLyricsUrl, false);
+	fullLyricsText.replace("\\n", "\n");
+	int nRp = 0;
+	nRp = qText_indexOfEnd(fullLyricsText, "\"lrc\"", 0);
+	if (nRp != -1)
+		result.lyrics.lver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
+	else
+		result.lyrics.isHaveLver = false;
+	nRp = qText_indexOfEnd(fullLyricsText, "\"tlyric\"", 0);
+	if (nRp != -1)
+		result.lyrics.tver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
+	else
+		result.lyrics.isHaveTver = false;
+	nRp = qText_indexOfEnd(fullLyricsText, "\"romalrc\"", 0);
+	if (nRp != -1)
+		result.lyrics.rver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
+	else
+		result.lyrics.isHaveRver = false;
+	if (rawSongInfo.mvid != "0")
+	{
+		QString mvInfoText = qNetwork_getHttpText("GET", QString("http://music.163.com/api/mv/detail?id=%1&type=mp4").arg(rawSongInfo.mvid), false);
+		result.mv.title = qText_Between(mvInfoText, "\"name\":\"", "\"", 0);
+		if (result.mv.title == "")
+			result.mv.title = "点击前往MV";
+		nRp = qText_indexOfEnd(mvInfoText, "\"brs\":", 0);
+		if (nRp != -1)
+		{
+			if (mvInfoText.indexOf("\"1080\":\"") != -1)
+				result.mv.url = qText_Between(mvInfoText, "\"1080\":\"", "\"", nRp);
+			else if (mvInfoText.indexOf("\"720\":\"") != -1)
+				result.mv.url = qText_Between(mvInfoText, "\"720\":\"", "\"", nRp);
+			else if (mvInfoText.indexOf("\"480\":\"") != -1)
+				result.mv.url = qText_Between(mvInfoText, "\"480\":\"", "\"", nRp);
+			else if (mvInfoText.indexOf("\"360\":\"") != -1)
+				result.mv.url = qText_Between(mvInfoText, "\"360\":\"", "\"", nRp);
+			else if (mvInfoText.indexOf("\"240\":\"") != -1)
+				result.mv.url = qText_Between(mvInfoText, "\"240\":\"", "\"", nRp);
+			else
+				result.mv.isAvailable = false;
+		}
+		else
+			result.mv.isAvailable = false;
+	}
+	else
+		result.mv.isAvailable = false;
 	return result;
 }
 
@@ -349,7 +439,7 @@ thread_downloader::thread_downloader()
 	//初始化内存数据
 	downloadUrl = NULL;
 	savePath = NULL;
-	bufferSize = 1048576;//默认缓存大小1MB
+	bufferSize = 409600;//默认缓存大小400KB
 	index = -1;
 }
 
@@ -366,6 +456,16 @@ void thread_downloader::run(void)
 	long long nowDownloadedSize = 0;//已下载大小
 	QFile outputFile;
 	outputFile.setFileName(savePath);
+	if (outputFile.exists() == true)//如果已存在
+	{
+		if (outputFile.size() != totalDownloadSize)//使用文件大小简单验证是否为同一首歌, 同名又同大小的歌大概是不存在的吧(我想)
+			outputFile.setFileName(savePath.remove(".mp3") + "#" + id + ".mp3");
+		else
+		{
+			emit finishWork(index, 304);//发射已存在特征信号
+			return;
+		}
+	}
 	if (outputFile.open(QIODevice::ReadWrite) == false)
 	{
 		emit finishWork(index, -2);//发射失败信号
@@ -399,7 +499,7 @@ thread_converter::thread_converter()
 	//初始化内存数据
 	filePath = NULL;
 	savePath = NULL;
-	bufferSize = 102400;//默认缓存大小100kb
+	bufferSize = 1048576;//默认缓存大小1MB
 	index = -1;
 }
 
@@ -414,6 +514,16 @@ void thread_converter::run(void)
 	}
 	QFile resultFile;
 	resultFile.setFileName(savePath);
+	if (resultFile.exists() == true)//如果已存在
+	{
+		if (resultFile.size() != ucFile.size())//使用文件大小简单验证是否为同一首歌, 同名又同大小的歌大概是不存在的吧(我想)
+			resultFile.setFileName(savePath.remove(".mp3") + "-" + QString::number(GetTickCount64() % 100000) + ".mp3");
+		else
+		{
+			emit finishWork(index, 304);//发射已存在特征信号
+			return;
+		}
+	}
 	if (!resultFile.open(QIODevice::ReadWrite))
 	{
 		emit finishWork(index, -2);//发射失败信号
@@ -444,3 +554,61 @@ void thread_converter::run(void)
 	resultFile.close();//写入文件并关闭文件
 	emit finishWork(index, 200);//发射完成信号
 }
+
+//msgBox::msgBox(QDialog* parent)
+//{
+//	ui_mb.setupUi(this);
+//	this->setWindowFlag(Qt::FramelessWindowHint);
+//	setWindowStyle();
+//
+//	connect(ui_mb.btn_closeWindow, &QPushButton::clicked, this, this->close());
+//}
+//
+//void msgBox::setWindowStyle()
+//{
+//	if (type == 1)
+//	{
+//		ui_mb.w_topbar->setProperty("style", "information");
+//		ui_mb.w_topbar->setStyleSheet(ui_mb.w_topbar->styleSheet());
+//		ui_mb.w_title->setProperty("style", "information");
+//		ui_mb.w_title->setStyleSheet(ui_mb.w_title->styleSheet());
+//	}
+//	if (type == 2)
+//	{
+//		ui_mb.w_topbar->setProperty("style", "warning");
+//		ui_mb.w_topbar->setStyleSheet(ui_mb.w_topbar->styleSheet());
+//		ui_mb.w_title->setProperty("style", "warning");
+//		ui_mb.w_title->setStyleSheet(ui_mb.w_title->styleSheet());
+//	}
+//	if (type == 3)
+//	{
+//		ui_mb.w_topbar->setProperty("style", "error");
+//		ui_mb.w_topbar->setStyleSheet(ui_mb.w_topbar->styleSheet());
+//		ui_mb.w_title->setProperty("style", "error");
+//		ui_mb.w_title->setStyleSheet(ui_mb.w_title->styleSheet());
+//	}
+//}
+//
+//void msgBox::mouseMoveEvent(QMouseEvent* mouseEvent)//鼠标拖动事件
+//{
+//	if (mouseEvent->y() < 25 || slideWindowCenterX != -1 || slideWindowCenterY != -1)
+//	{
+//		if (slideWindowCenterX == -1 || slideWindowCenterY == -1)
+//		{
+//			slideWindowCenterX = mouseEvent->x();
+//			slideWindowCenterY = mouseEvent->y();
+//		}
+//		if(slideWindowCenterX != -2 && slideWindowCenterY != -2)
+//			this->setGeometry(mouseEvent->globalX() - slideWindowCenterX, mouseEvent->globalY() - slideWindowCenterY, this->width(), this->height());
+//	}
+//	else
+//	{
+//		slideWindowCenterX = -2;
+//		slideWindowCenterY = -2;
+//	}
+//}
+//void msgBox::mouseReleaseEvent(QMouseEvent* mouseEvent)
+//{
+//	slideWindowCenterX = -1;
+//	slideWindowCenterY = -1;
+//}

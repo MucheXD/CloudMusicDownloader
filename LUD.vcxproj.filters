@@ -80,6 +80,15 @@
     <QtUic Include="workInfoW.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="msgbox.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="settingsAreaW.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="songInfoW.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="workWidgets.h">
@@ -96,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\x64\Debug\Result\THANK U FOR.mp3">
-      <Filter>Debug</Filter>
+      <Filter>Form Files</Filter>
     </Media>
   </ItemGroup>
 </Project>

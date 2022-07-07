@@ -9,5 +9,7 @@
         <file alias="checkbox-enabled-unchecked-hover">Resource/icons/checkbox-enabled-unchecked-hover.svg</file>
         <file alias="checkbox-enabled-checked-hover">Resource/icons/checkbox-enabled-checked-hover.svg</file>
         <file alias="arrow-right">Resource/icons/arrow-right.svg</file>
+        <file alias="download">Resource/icons/download.svg</file>
+        <file alias="finish">Resource/icons/finish.svg</file>
     </qresource>
 </RCC>

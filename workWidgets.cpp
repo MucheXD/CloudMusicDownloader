@@ -44,7 +44,7 @@ void workWidget_load::searchModeChanged(int mode)
     }
     if (mode == 3)//本地缓存
     {
-        ui_wLoad.searchText->setPlaceholderText("输入自定义的本地缓存文件夹位置");
+        ui_wLoad.searchText->setPlaceholderText("输入自定义的本地缓存文件夹位置, 默认请留空");
     }
     ui_wLoad.btn_search->setText("搜索");
     clearSearchResult();
@@ -148,6 +148,7 @@ void workWidget_load::printSearchResult(int mode,std::vector<SONGINFO> sr_songIn
             widget->ui_searchResultW.text_ID->setText(QString("#%1").arg(sr_songInfo.at(nowPrtItem).id));
             widget->type = mode;
             widget->songInfo = sr_songInfo.at(nowPrtItem);
+            connect(widget->ui_searchResultW.btn_moreInfo, &QPushButton::clicked, this, &workWidget_load::showSearchResultDetailInfo);
             connect(widget->ui_searchResultW.btn_choose, &QPushButton::clicked, this, &workWidget_load::searchResultChoosed);
             widget->setAttribute(Qt::WA_DeleteOnClose);
             p_searchResultTable_layout->addWidget(widget);
@@ -175,6 +176,7 @@ void workWidget_load::printSearchResult(int mode, std::vector<PLAYLISTINFO> sr_p
         while (nowPrtItem < sr_playList.size())
         {
             searchResultW* widget = new searchResultW;
+            widget->ui_searchResultW.btn_moreInfo->setVisible(false);
             widget->ui_searchResultW.text_title->setText(sr_playList.at(nowPrtItem).name);
             widget->ui_searchResultW.text_title->adjustSize();
             widget->ui_searchResultW.text_subTitle->setGeometry(widget->ui_searchResultW.text_title->x()+ widget->ui_searchResultW.text_title->width()+5,
@@ -195,6 +197,7 @@ void workWidget_load::printSearchResult(int mode, std::vector<PLAYLISTINFO> sr_p
             widget->ui_searchResultW.text_ID->setText(QString("#%1").arg(sr_playList.at(nowPrtItem).id));
             widget->type = mode;
             widget->playListInfo = sr_playList.at(nowPrtItem);
+            connect(widget->ui_searchResultW.btn_moreInfo, &QPushButton::clicked, this, &workWidget_load::showSearchResultDetailInfo);
             connect(widget->ui_searchResultW.btn_choose, &QPushButton::clicked, this, &workWidget_load::searchResultChoosed);
             widget->setAttribute(Qt::WA_DeleteOnClose);
             p_searchResultTable_layout->addWidget(widget);
@@ -225,6 +228,7 @@ void workWidget_load::printSearchResult(int mode)
     int ucFileCount = searchDir.entryList(ucFileFilter, QDir::Files | QDir::Readable, QDir::Name).count();
 
     searchResultW* widget = new searchResultW;
+    widget->ui_searchResultW.btn_moreInfo->setVisible(false);
     widget->ui_searchResultW.text_title->setText("本地网易云音乐缓存文件");
     widget->ui_searchResultW.text_title->adjustSize();
     widget->ui_searchResultW.text_subTitle->setGeometry(widget->ui_searchResultW.text_title->x() + widget->ui_searchResultW.text_title->width() + 5,
@@ -240,16 +244,34 @@ void workWidget_load::printSearchResult(int mode)
     widget->ui_searchResultW.text_ID->hide();
     widget->type = mode;
     widget->localDirPath = searchDir.path();
+    connect(widget->ui_searchResultW.btn_moreInfo, &QPushButton::clicked, this, &workWidget_load::showSearchResultDetailInfo);
     connect(widget->ui_searchResultW.btn_choose, &QPushButton::clicked, this, &workWidget_load::searchResultChoosed);
     widget->setAttribute(Qt::WA_DeleteOnClose);
     p_searchResultTable_layout->addWidget(widget);
     p_searchResultTable_widget->setFixedHeight(80);
 }
+void workWidget_load::showSearchResultDetailInfo(void)
+{
+    QPushButton* senderCopy_choose = qobject_cast<QPushButton*>(sender());
+    searchResultW* senderCopy_searchResultW = static_cast<searchResultW*>(senderCopy_choose->parent()->parent());
+    songInfoW* infoWidget = new songInfoW;
+    infoWidget->setParent((QWidget*)senderCopy_searchResultW->parent()->parent()->parent()->parent()->parent());
+    infoWidget->type = senderCopy_searchResultW->type;
+    infoWidget->p_songInfo = &senderCopy_searchResultW->songInfo;
+    infoWidget->songInfo = senderCopy_searchResultW->songInfo;
+
+    //infoWidget->playListInfo = senderCopy_searchResultW->playListInfo;
+    //infoWidget->localDirPath = senderCopy_searchResultW->localDirPath;
+    infoWidget->initUi();
+    infoWidget->show();
+}
+
 void workWidget_load::searchResultChoosed(void)
 {
     QPushButton* senderCopy_choose = qobject_cast<QPushButton*>(sender());
     searchResultW* senderCopy_searchResultW = static_cast<searchResultW*>(senderCopy_choose->parent()->parent());
     std::vector<SONGINFO> append_songs;
+
     if (senderCopy_searchResultW->type == 1)
     {
         append_songs.push_back(senderCopy_searchResultW->songInfo);
@@ -284,12 +306,149 @@ void workWidget_load::searchResultChoosed(void)
     }
     listWidget->appendSongList(append_songs);
 }
+
 searchResultW::searchResultW(QWidget* parent)
 {
     ui_searchResultW.setupUi(this);
     type = 0;
     songInfo = {};
     playListInfo = {};
+}
+
+songInfoW::songInfoW(QWidget* parent)
+{
+    ui_songInfoW.setupUi(this);
+    connect(ui_songInfoW.pushButton_lyrics_ori, &QPushButton::clicked, this, &songInfoW::switchLyrics);
+    connect(ui_songInfoW.pushButton_lyrics_tra, &QPushButton::clicked, this, &songInfoW::switchLyrics);
+    connect(ui_songInfoW.pushButton_lyrics_rom, &QPushButton::clicked, this, &songInfoW::switchLyrics);
+    connect(ui_songInfoW.pushButton_topBar, &QPushButton::clicked, this, &songInfoW::quitInfoW);
+    connect(ui_songInfoW.pushButton_lyrics_copy, &QPushButton::clicked, this, &songInfoW::copyLyrics);
+    connect(ui_songInfoW.pushButton_lyrics_download, &QPushButton::clicked, this, &songInfoW::downloadLyricBtnClicked);
+    connect(ui_songInfoW.pushButton_dowloadImg, &QPushButton::clicked, this, &songInfoW::downloadBlurPicToFile);
+    //QPixmap backgroundImg = qNetwork_getHttpData(playListInfo);
+    //ui_songInfoW.label_backgroundImg->setPixmap()
+}
+void songInfoW::initUi()
+{
+    songInfo = fillSongInfo(songInfo);
+    QPixmap img;
+    img.loadFromData(qNetwork_getHttpData("GET", songInfo.blurPicUrl + "?param=120y120", false));
+    ui_songInfoW.label_img->setPixmap(img);
+    ui_songInfoW.label_title->setText(songInfo.name);
+    ui_songInfoW.label_artists->setText("作者: "+qDID_artistsStrIn_songInfo(songInfo.artists, 20));
+    TIME songDuration = qTime_formatFromMs(songInfo.duration.toInt(), 2);
+    ui_songInfoW.label_duration->setText(QString("时长: %1分%2秒").arg(songDuration.m).arg(songDuration.s));
+    ui_songInfoW.label_id->setText("ID: " + songInfo.id);
+    if (songInfo.lyrics.isHaveLver == true)
+        ui_songInfoW.textBrowser_lyrics->setText(songInfo.lyrics.lver);
+    else
+    {
+        ui_songInfoW.pushButton_lyrics_ori->setEnabled(false);
+        ui_songInfoW.textBrowser_lyrics->setText("暂未获取到歌词");
+    }     
+    if (songInfo.lyrics.isHaveTver == false || songInfo.lyrics.tver == "")
+        ui_songInfoW.pushButton_lyrics_tra->setEnabled(false);
+    if (songInfo.lyrics.isHaveRver == false || songInfo.lyrics.rver == "")
+        ui_songInfoW.pushButton_lyrics_rom->setEnabled(false);
+    if (songInfo.mv.isAvailable == true)
+        ui_songInfoW.label_mv->setText(QString("MV: <style> a {color: #0064c8; text-decoration: none;} </style> <a href=\"%1\">%2").arg(songInfo.mv.url).arg(songInfo.mv.title));
+    else
+        ui_songInfoW.label_mv->setText(QString("MV: 未找到可用MV"));
+    ui_songInfoW.label_mv->setOpenExternalLinks(true);
+    u_setDownloadLyricBtn(songInfo.lyrics.needDownload);
+}
+void songInfoW::switchLyrics(void)
+{
+    ui_songInfoW.pushButton_lyrics_copy->setEnabled(true);
+    ui_songInfoW.pushButton_lyrics_download->setEnabled(true);
+    if (ui_songInfoW.pushButton_lyrics_ori->isChecked() == true)
+        ui_songInfoW.textBrowser_lyrics->setText(songInfo.lyrics.lver);
+    if (ui_songInfoW.pushButton_lyrics_tra->isChecked() == true)
+        ui_songInfoW.textBrowser_lyrics->setText(songInfo.lyrics.tver);
+    if (ui_songInfoW.pushButton_lyrics_rom->isChecked() == true)
+        ui_songInfoW.textBrowser_lyrics->setText(songInfo.lyrics.rver);
+    if (songInfo.lyrics.needDownload>=1 && songInfo.lyrics.needDownload <= 1)
+    {
+        if (ui_songInfoW.pushButton_lyrics_ori->isChecked() == true)
+            songInfo.lyrics.needDownload = 1;
+        if (ui_songInfoW.pushButton_lyrics_tra->isChecked() == true)
+            songInfo.lyrics.needDownload = 2;
+        if (ui_songInfoW.pushButton_lyrics_rom->isChecked() == true)
+            songInfo.lyrics.needDownload = 3;
+    }
+}
+void songInfoW::copyLyrics(void)
+{
+    QString copyStr;
+    if (ui_songInfoW.pushButton_lyrics_ori->isChecked() == true)
+        copyStr = songInfo.lyrics.lver.replace(QRegularExpression("\\[.*\\]"), "");
+    if (ui_songInfoW.pushButton_lyrics_tra->isChecked() == true)
+        copyStr = songInfo.lyrics.tver.replace(QRegularExpression("\\[.*\\]"), "");
+    if (ui_songInfoW.pushButton_lyrics_rom->isChecked() == true)
+        copyStr = songInfo.lyrics.rver.replace(QRegularExpression("\\[.*\\]"), "");
+    QClipboard *cpb = QApplication::clipboard();
+    cpb->setText(copyStr);
+    ui_songInfoW.pushButton_lyrics_copy->setEnabled(false);
+    return;
+}
+void songInfoW::u_setDownloadLyricBtn(int mode)
+{
+    if (songInfo.lyrics.needDownload == 0)
+    {
+        ui_songInfoW.pushButton_lyrics_download->setChecked(false);
+        ui_songInfoW.pushButton_lyrics_download->setProperty("isDownloadAll", false);
+        ui_songInfoW.pushButton_lyrics_download->setText("歌\n词\n下\n载\n选\n项");
+    }
+    if (songInfo.lyrics.needDownload >= 1 && songInfo.lyrics.needDownload <= 3)
+    {
+        ui_songInfoW.pushButton_lyrics_download->setChecked(true);
+        ui_songInfoW.pushButton_lyrics_download->setProperty("isDownloadAll", false);
+        ui_songInfoW.pushButton_lyrics_download->setText("附\n下\n载\n当\n前");
+    }
+    if (songInfo.lyrics.needDownload == 4)
+    {
+        ui_songInfoW.pushButton_lyrics_download->setChecked(true);
+        ui_songInfoW.pushButton_lyrics_download->setProperty("isDownloadAll", true);
+        ui_songInfoW.pushButton_lyrics_download->setText("附\n下\n载\n所\n有");
+    }
+}
+void songInfoW::downloadLyricBtnClicked()
+{
+    if (ui_songInfoW.pushButton_lyrics_download->isChecked() == true)
+    {
+        if (ui_songInfoW.pushButton_lyrics_download->property("isDownloadAll") == false)
+        {
+            if (ui_songInfoW.pushButton_lyrics_ori->isChecked() == true)
+                songInfo.lyrics.needDownload = 1;
+            if (ui_songInfoW.pushButton_lyrics_tra->isChecked() == true)
+                songInfo.lyrics.needDownload = 2;
+            if (ui_songInfoW.pushButton_lyrics_rom->isChecked() == true)
+                songInfo.lyrics.needDownload = 3;
+        }
+    }
+    else
+    {
+        if (ui_songInfoW.pushButton_lyrics_download->property("isDownloadAll") == false)
+            songInfo.lyrics.needDownload = 4;
+        else 
+            songInfo.lyrics.needDownload = 0;
+    }
+    u_setDownloadLyricBtn(songInfo.lyrics.needDownload);
+}
+void songInfoW::downloadBlurPicToFile()
+{
+    QString savePath = QFileDialog::getSaveFileName(this, tr("保存封面图像"), "/", "默认图像文件 (*.png)");
+    QFile* saveFile = new QFile(savePath);
+    saveFile->open(QIODevice::ReadWrite);
+    saveFile->write(qNetwork_getHttpData("GET", songInfo.blurPicUrl + "", false));
+    saveFile->close();
+}
+void songInfoW::quitInfoW(void)
+{
+    *p_songInfo = songInfo;
+    emit songInfoWExit(index);
+    this->setAttribute(Qt::WA_DeleteOnClose);
+    this->close();
 }
 //###############################待选列表工作组件###############################
 workWidget_list::workWidget_list(QWidget* parent)
@@ -376,13 +535,20 @@ void workWidget_list::printSongListTable(std::vector<SONGINFO> songsInfo, bool i
     if (isAdd == false)
         clearSongList();
     short nowPrtItem = 0;
+    int fNumInSongList;
+    if (isAdd == true)
+        fNumInSongList = 0;
+    else
+        fNumInSongList = songList.size();
     while (nowPrtItem < songsInfo.size())
     {
         songListW* widget = new songListW;
         widget->songInfo = songsInfo.at(nowPrtItem);
+        widget->numInSongList = fNumInSongList + nowPrtItem;
         widget->reUiInfo();
         widget->setAttribute(Qt::WA_DeleteOnClose);
         p_songListTable_layout->addWidget(widget);
+        connect(widget->ui_songListW.btn_choose, &QPushButton::clicked, this, &workWidget_list::showSearchResultDetailInfo);
         nowPrtItem += 1;
     }
     songCount += songsInfo.size();
@@ -469,7 +635,26 @@ void workWidget_list::addToDownload(void)
 	}
 	scanList();
 }
-
+void workWidget_list::showSearchResultDetailInfo(void)
+{
+    QPushButton* senderCopy_choose = qobject_cast<QPushButton*>(sender());
+    songListW* senderCopy_songListW = static_cast<songListW*>(senderCopy_choose->parent()->parent());
+    songInfoW* infoWidget = new songInfoW;
+    infoWidget->setParent((QWidget*)senderCopy_songListW->parent()->parent()->parent()->parent()->parent());
+    infoWidget->p_songInfo = &songList[senderCopy_songListW->numInSongList];
+    infoWidget->songInfo = senderCopy_songListW->songInfo;
+    infoWidget->index = senderCopy_songListW->numInSongList;
+    connect(infoWidget, &songInfoW::songInfoWExit, this, &workWidget_list::songInfoWindowExited);
+    //infoWidget->playListInfo = senderCopy_searchResultW->playListInfo;
+    //infoWidget->localDirPath = senderCopy_searchResultW->localDirPath;
+    infoWidget->initUi();
+    infoWidget->show();
+}
+void workWidget_list::songInfoWindowExited(int index)
+{
+    if(songList.at(index).lyrics.needDownload!=0)
+        ui_wList.text_title->setText(songList.at(index).name+"[附词]"); 
+}
 songListW::songListW(QWidget* parent)
 {
     ui_songListW.setupUi(this);
@@ -477,6 +662,10 @@ songListW::songListW(QWidget* parent)
 void songListW::reUiInfo(void)
 {
     ui_songListW.text_title->setText(songInfo.name);
+    if (songInfo.isLocalOnly == true && songInfo.isHaveLocal == true)
+        ui_songListW.btn_choose->setVisible(false);
+    if (songInfo.lyrics.needDownload != 0)
+        ui_songListW.text_title->setText(ui_songListW.text_title->text() + "[附词]");
     ui_songListW.text_title->adjustSize();
     if (ui_songListW.text_title->width() > 250)
         ui_songListW.text_title->setFixedWidth(250);
@@ -528,6 +717,8 @@ void workWidget_workList::addPrintWorkTable(WORKINFO workInfo)
     if (widget->workInfo.type == 1)
     {
         widget->ui_workInfoW.text_title->setText(widget->workInfo.songInfo.name);
+        if (workInfo.songInfo.lyrics.needDownload != 0)
+            widget->ui_workInfoW.text_title->setText(widget->ui_workInfoW.text_title->text() + "[附词]");
         widget->ui_workInfoW.text_title->adjustSize();
     }
     else
@@ -556,15 +747,17 @@ int workWidget_workList::findNextWorkItemIndex()
 }
 void workWidget_workList::openSaveLocation(void)
 {
-    QString runCommand = QDir::toNativeSeparators(QApplication::applicationDirPath() + "/Result");
+    QString savePath = QApplication::applicationDirPath() + "/Result";
+    QDir saveDirPath;
+    saveDirPath.setCurrent(savePath);
+    QString a = saveDirPath.currentPath() + "/" + saveDirPath.dirName();
+    QString runCommand = QDir::toNativeSeparators(saveDirPath.currentPath() + "/" + saveDirPath.dirName());
     QProcess::startDetached("explorer.exe",QStringList(runCommand));
 }
 bool workWidget_workList::createDir(QString dirPath)
 {
     QDir dirWorker;
-    //dirWorker.setCurrent(dirPath);
-    dirWorker.setPath(dirPath);
-    if (dirWorker.exists() == false)
+    if (dirWorker.exists(dirPath) == false)
     {
         if (dirWorker.mkpath(dirPath) == false)
             return false;
@@ -579,23 +772,28 @@ void workWidget_workList::startWork(int index)
         index = findNextWorkItemIndex();
     if (index == -1)//如果找不到下一个工作, 可能已经全部完成, 直接返回
         return;
+    //QString savePath = qConfig_readKey("work.savePath");
+    if (!createDir(QApplication::applicationDirPath() + "/Result"))
+        QMessageBox::critical(this, "LUD-意外错误",
+            "一个意外的错误发生在workWidgets->workList->startWork()中, 指定的保存位置无效\n建议您重启程序, 如果仍无法解决, 请反馈给开发者");
     workInfoW* workInfoItem = (workInfoW*)p_workInfoTable_layout->layout()->itemAt(index)->widget();
+    qFile_createDir(QApplication::applicationDirPath() + "/Result");//TODO 此处应该允许用户自定义保存路径
+    workInfoItem->workInfo.savePath = QApplication::applicationDirPath() + "/Result";
     if (workInfoItem->workInfo.workStatus.type == 1)
     {
         if (nowDownloading >= 1)//TODO 此处可以允许用户自定义最大下载数
             return;
         QString downloadUrl;
-        qFile_createDir(QApplication::applicationDirPath() + "/Result");//TODO 此处应该允许用户自定义保存路径
         //生成下载URL
         if (workInfoItem->workInfo.type = 1)//下载单曲
             downloadUrl = QString("http://music.163.com/song/media/outer/url?id=%1.mp3")
             .arg(workInfoItem->workInfo.songInfo.id);
         thread_downloader* downloader = new thread_downloader;//新线程
         downloader->index = index;
+        downloader->id = workInfoItem->workInfo.songInfo.id;
         downloader->downloadUrl = downloadUrl;
         //TODO 这里默认了分块大小(1MB) 可以允许用户自定义
-        createDir(QApplication::applicationDirPath() + "/Result");//TODO 这里应该允许用户自定义保存位置
-        downloader->savePath = QApplication::applicationDirPath() + "/Result/" + workInfoItem->workInfo.songInfo.name + ".mp3";
+        downloader->savePath = QApplication::applicationDirPath() + "/Result" + "/" + workInfoItem->workInfo.songInfo.name.replace(QRegularExpression("[\\/:*?<>|\"]"), "") + ".mp3";
         connect(downloader, &thread_downloader::finishWork, this, &workWidget_workList::workFinished);
         connect(downloader, &thread_downloader::reProgress, this, &workWidget_workList::reWorkProgress);
         downloader->start();
@@ -611,8 +809,7 @@ void workWidget_workList::startWork(int index)
         thread_converter* converter = new thread_converter;//新线程
         converter->index = index;
         converter->filePath = workInfoItem->workInfo.songInfo.localPath;
-        createDir(QApplication::applicationDirPath() + "/Result");//TODO 这里应该允许用户自定义保存位置
-        converter->savePath = QApplication::applicationDirPath() + "/Result/" + workInfoItem->workInfo.songInfo.name + ".mp3";
+        converter->savePath = QApplication::applicationDirPath() + "/Result" + "/" + workInfoItem->workInfo.songInfo.name.replace(QRegularExpression("[\\/:*?<>|\"]"), "-") + ".mp3";
         connect(converter, &thread_converter::finishWork, this, &workWidget_workList::workFinished);
         connect(converter, &thread_converter::reProgress, this, &workWidget_workList::reWorkProgress);
         converter->start();
@@ -620,6 +817,7 @@ void workWidget_workList::startWork(int index)
         nowConverting += 1;
         nowWorking += 1;
     }
+    
 }
 void workWidget_workList::reWorkProgress(int index, int size, int speed)
 {
@@ -650,6 +848,8 @@ void workWidget_workList::workFinished(int index , int code)
 {
     workInfoW* workInfoItem = (workInfoW*)p_workInfoTable_layout->layout()->itemAt(index)->widget();
     workInfoItem->workInfo.workStatus.code = code;
+    if (workInfoItem->workInfo.songInfo.lyrics.needDownload != 0)
+        downloadLyrics(workInfoItem->workInfo.songInfo.lyrics.needDownload, workInfoItem->workInfo.savePath + "/" + workInfoItem->workInfo.songInfo.name + ".lrc", workInfoItem->workInfo.songInfo.lyrics);
     if (workInfoItem->workInfo.workStatus.type == 1)
         nowDownloading -= 1;
     if (workInfoItem->workInfo.workStatus.type == 2)
@@ -657,6 +857,20 @@ void workWidget_workList::workFinished(int index , int code)
     nowWorking -= 1;
     startWork(-1);//自动开始下一个下载
     workInfoItem->reUiProgress();
+}
+void workWidget_workList::downloadLyrics(int mode , QString saveFileName ,LYRIC lyrics)
+{
+    QFile lyricFile;
+    lyricFile.setFileName(saveFileName);
+    lyricFile.remove();
+    lyricFile.open(QIODevice::ReadWrite | QIODevice::Append);
+    if (mode == 1 || mode == 4)
+        lyricFile.write(QByteArray::fromStdString(lyrics.lver.toStdString() + "\n"));
+    if (mode == 2 || mode == 4)
+        lyricFile.write(QByteArray::fromStdString(lyrics.tver.toStdString() + "\n"));
+    if (mode == 3 || mode == 4)
+        lyricFile.write(QByteArray::fromStdString(lyrics.rver.toStdString() + "\n"));
+    lyricFile.close();
 }
 
 void workWidget_workList::rePrintWorkListTable()
@@ -710,6 +924,11 @@ void workInfoW::reUiProgress()
             ui_workInfoW.progressBar_workProgress->setValue(0);
             ui_workInfoW.text_workInfo->setText("已完成");
         }
+        if (workInfo.workStatus.code == 304)
+        {
+            ui_workInfoW.progressBar_workProgress->setValue(0);
+            ui_workInfoW.text_workInfo->setText("已跳过");
+        }
         if (workInfo.workStatus.code < 0)//出错的情况 (错误代码全部小于0)
         {
             ui_workInfoW.progressBar_workProgress->setValue(0);
@@ -739,6 +958,11 @@ void workInfoW::reUiProgress()
             ui_workInfoW.progressBar_workProgress->setValue(0);
             ui_workInfoW.text_workInfo->setText("已完成");
         }
+        if (workInfo.workStatus.code == 304)
+        {
+            ui_workInfoW.progressBar_workProgress->setValue(0);
+            ui_workInfoW.text_workInfo->setText("已跳过");
+        }
         if (workInfo.workStatus.code < 0)//出错的情况 (错误代码全部小于0)
         {
             ui_workInfoW.progressBar_workProgress->setValue(0);
@@ -760,4 +984,27 @@ workWidget_settings::workWidget_settings(QWidget* parent)
     : QWidget(parent)
 {
     ui_wSettings.setupUi(this);
+    settingsAreaW* sAW = new settingsAreaW;
+    ui_wSettings.settingsArea->setWidget(sAW);
+    connect(ui_wSettings.btn_apply, &QPushButton::clicked, this, &workWidget_settings::applyChanges);
+
+}
+void workWidget_settings::applyChanges()
+{
+    QFile configFile;
+    configFile.setFileName(QCoreApplication::applicationDirPath() + "/LUD.dcf");
+    configFile.open(QIODevice::ReadWrite);
+    settingsAreaW* sAW = (settingsAreaW*)ui_wSettings.settingsArea->widget();
+    QString configData;
+    configData += "config.version=\"" + PROGRAMVERSION+"\"\n";
+    configData += "work.savePath=\"" + sAW->ui_sAW.input_work_savePath->text()+"\"\n";
+    configData += "work.maxDownloadings=\"" + QString::number(sAW->ui_sAW.set_work_maxDownloadings->value()) + "\"\n";
+    configData += "work.maxConvertings=\"" + QString::number(sAW->ui_sAW.set_work_maxConvertings->value()) + "\"\n";
+    configFile.write(configData.toStdString().c_str());
+    configFile.close();
+}
+
+settingsAreaW::settingsAreaW(QWidget* parent)
+{
+    ui_sAW.setupUi(this);
 }

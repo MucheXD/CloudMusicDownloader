@@ -16,7 +16,7 @@ public:
     void test(void);
 private:
     Ui::mainWindowClass ui_mainWindow;
-    QLabel* p_tag_list;
+    //QLabel* p_tag_list;
     void reUi(void);
     void mainMenuChanged(void);
 };

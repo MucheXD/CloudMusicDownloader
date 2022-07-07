@@ -45,7 +45,7 @@ border-width: 0px;
 </string>
     </property>
     <property name="text">
-     <string>评论过万日语歌合集</string>
+     <string>TEXT_TITLE</string>
     </property>
    </widget>
    <widget class="QLabel" name="text_subTitle">
@@ -63,7 +63,7 @@ color: #c0c5c8;
 border-width: 0px;</string>
     </property>
     <property name="text">
-     <string>9000首</string>
+     <string>SUBTITLE</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -87,7 +87,7 @@ color: #c0c5c8;
 border-width: 0px;</string>
     </property>
     <property name="text">
-     <string>#2137987910</string>
+     <string>#ID</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -107,7 +107,7 @@ border-width: 0px;</string>
 border-width: 0px;</string>
     </property>
     <property name="text">
-     <string>By 寂静和光</string>
+     <string>CREATOR</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -128,7 +128,7 @@ color: #c0c5c8;
 border-width: 0px;</string>
     </property>
     <property name="text">
-     <string>播放 6200000 | 订阅97000</string>
+     <string>DATA</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

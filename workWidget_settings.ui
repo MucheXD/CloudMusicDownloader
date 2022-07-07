@@ -7,11 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>400</height>
+    <height>467</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #f5f8fa;
+font: 10pt &quot;微软雅黑&quot;;</string>
   </property>
   <widget class="QLabel" name="text_title">
    <property name="geometry">
@@ -30,6 +34,86 @@ font: 11pt &quot;微软雅黑&quot;;</string>
    </property>
    <property name="text">
     <string>功能暂未开发   该页面施工中!</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget_settingsContentArea" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>80</y>
+     <width>641</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QScrollArea" name="settingsArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="settingsAreaContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>621</width>
+         <height>131</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="btn_apply">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>50</y>
+     <width>90</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton 
+{
+	color: #ffffff;
+	background-color: #0064c8;
+	border-width: 2px;
+	border-color: #146ec8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #c8c8c8;
+	border-color: #c8c8c8;
+}
+
+QPushButton:hover
+{
+	background-color: #146ec8;
+	border-width: 2px;
+	border-color: #2778c8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed 
+{
+	background-color: #2778c8;
+	border-color: #2778c8;
+	border-bottom-color: #0064c8;
+}</string>
+   </property>
+   <property name="text">
+    <string>应用</string>
    </property>
   </widget>
  </widget>

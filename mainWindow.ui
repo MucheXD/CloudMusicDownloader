@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>mainWindow</string>
+   <string>LUD - Get the songs you like (￣▽￣)/</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #f5f8fa;
@@ -93,7 +93,7 @@ QPushButton:checked {
      <rect>
       <x>0</x>
       <y>10</y>
-      <width>160</width>
+      <width>213</width>
       <height>40</height>
      </rect>
     </property>
@@ -119,9 +119,9 @@ QPushButton:checked {
    <widget class="QPushButton" name="btn_mainMenu_list">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>214</x>
       <y>10</y>
-      <width>160</width>
+      <width>213</width>
       <height>40</height>
      </rect>
     </property>
@@ -138,9 +138,9 @@ QPushButton:checked {
    <widget class="QPushButton" name="btn_mainMenu_workList">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>427</x>
       <y>10</y>
-      <width>160</width>
+      <width>213</width>
       <height>40</height>
      </rect>
     </property>
@@ -155,11 +155,14 @@ QPushButton:checked {
     </property>
    </widget>
    <widget class="QPushButton" name="btn_mainMenu_settings">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>640</x>
       <y>10</y>
-      <width>160</width>
+      <width>0</width>
       <height>40</height>
      </rect>
     </property>
@@ -174,42 +177,6 @@ QPushButton:checked {
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="text_mainTitle">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>441</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 700 14pt &quot;微软雅黑&quot;;</string>
-   </property>
-   <property name="text">
-    <string>LUD - Netease Cloud Music Downloader</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="text_state">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>0</y>
-     <width>160</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: #ebf0f5;
-font: 14pt &quot;微软雅黑&quot;;</string>
-   </property>
-   <property name="text">
-    <string>准备就绪</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
   <widget class="QWidget" name="widget_workWidget" native="true">
    <property name="enabled">
     <bool>true</bool>
@@ -222,6 +189,57 @@ font: 14pt &quot;微软雅黑&quot;;</string>
      <height>401</height>
     </rect>
    </property>
+  </widget>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #ebf0f5;</string>
+   </property>
+   <widget class="QLabel" name="text_mainTitle">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>640</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 14pt &quot;微软雅黑&quot;;</string>
+    </property>
+    <property name="text">
+     <string>LUD - Netease Cloud Music Downloader</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="text_subTitle">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>45</y>
+      <width>640</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 10pt &quot;微软雅黑&quot;;</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;V0.4.2 &lt;a href=&quot;https://github.com/MucheXD&quot;&gt;&lt;span style=&quot; color:#000000;text-decoration:none;&quot;&gt;By - MucheXD&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

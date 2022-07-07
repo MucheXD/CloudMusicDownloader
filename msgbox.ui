@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>msgBoxW</class>
+ <widget class="QDialog" name="msgBoxW">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>130</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+	background-color: #f5f8fa;
+	font: 11pt &quot;微软雅黑&quot;;
+}
+
+QPushButton
+{
+	font: 10pt &quot;微软雅黑&quot;;
+	color: #000000;
+	background-color: #f0f3f5;
+	border-width: 2px;
+	border-color: #ebf0f5;
+	border-bottom-color: #d4dae1;
+	border-style: solid;
+	border-radius: 5px;
+	padding: 2px 5px 2px 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #f0f0f0;
+	border-color:  #f0f0f0;
+}
+
+QPushButton:hover
+{
+	background-color: #e7ebf0;
+	border-width: 2px;
+	border-color: #e2e7eb;
+	border-bottom-color: #cacdd2;
+	border-style: solid;
+	border-radius: 5px;
+}
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-bottom-color: #dce4eb;
+}
+
+QPushButton[style=&quot;highlight&quot;]
+{
+	color: #ffffff;
+	background-color: #0064c8;
+	border-width: 2px;
+	border-color: #146ec8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled[style=&quot;highlight&quot;]
+{
+	background-color: #c8c8c8;
+	border-color: #c8c8c8;
+}
+
+QPushButton:hover[style=&quot;highlight&quot;]
+{
+	background-color: #146ec8;
+	border-width: 2px;
+	border-color: #2778c8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed[style=&quot;highlight&quot;] 
+{
+	background-color: #2778c8;
+	border-color: #2778c8;
+	border-bottom-color: #0064c8;
+}</string>
+  </property>
+  <property name="style" stdset="0">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="w_topbar" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>381</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget
+{
+	font: 700 12pt &quot;微软雅黑&quot;;
+	color: #ffffff;
+	border-style: none;
+	background-color:  #0064c8;
+	border-radius: 0px;
+}
+QWidget[style=&quot;warning&quot;]
+{
+	background-color:  #c8c800;
+}
+QPushButton 
+{
+	color: #ffffff;
+	background-color: rgba(255, 255, 255, 0);
+}
+QPushButton:disabled 
+{
+	background-color: #c8c8c8;
+}
+QPushButton:hover
+{
+	background-color: #c42b1c;
+}
+QPushButton:pressed 
+{
+	background-color: #c94132;
+}</string>
+   </property>
+   <property name="style" stdset="0">
+    <string notr="true"/>
+   </property>
+   <widget class="QPushButton" name="btn_closeWindow">
+    <property name="geometry">
+     <rect>
+      <x>355</x>
+      <y>0</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>×</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="w_title" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>20</y>
+     <width>381</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget#w_title
+{
+	font: 700 11pt &quot;微软雅黑&quot;;
+	color: #ffffff;
+	background-color:  #e2ebf5;
+}
+QWidget#w_title[style=&quot;warning&quot;]
+{
+	background-color: #f5f5e2;
+}
+QWidget#w_title[style=&quot;error&quot;]
+{
+	background-color:  #b1c6dc;
+}</string>
+   </property>
+   <property name="style" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <zorder>w_title</zorder>
+  <zorder>w_topbar</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

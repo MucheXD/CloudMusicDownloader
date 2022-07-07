@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>songInfoW_Class</class>
+ <widget class="QWidget" name="songInfoW_Class">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPushButton" name="pushButton_topBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton 
+{
+	color: #ffffff;
+	border: 0px;
+	background-color: #0064c8;
+	padding: 0px 0px 0px 10px;
+	font: 11pt &quot;微软雅黑&quot;;
+}
+QPushButton:hover
+{
+	background-color: #146ec8;
+}
+QPushButton:pressed 
+{
+	background-color: #2778c8;
+}r</string>
+   </property>
+   <property name="text">
+    <string>歌曲信息 - 点击此处返回</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget_main" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>30</y>
+     <width>641</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #f5f8fa;
+font: 11pt &quot;微软雅黑&quot;;</string>
+   </property>
+   <widget class="QLabel" name="label_img">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>120</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #f5f8fa;
+font: 11pt &quot;微软雅黑&quot;;
+border-width: 2px;
+border-style: solid;
+border-color: #c8c8c8;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_title">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>10</y>
+      <width>460</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 16pt &quot;Microsoft YaHei UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>TITLE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_artists">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>45</y>
+      <width>460</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;Microsoft YaHei UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>作者: USERNAME</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_duration">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>65</y>
+      <width>460</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;Microsoft YaHei UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>时长: TIME_FORMATED</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_id">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>85</y>
+      <width>460</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;Microsoft YaHei UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>ID: ID</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser_lyrics">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>140</y>
+      <width>541</width>
+      <height>210</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTextBrowser
+{
+	border-color: #c8c8c8;
+	border-width: 0px;
+	border-style: none;
+	background-color: #f5f8fa;
+}
+QScrollArea
+{
+	background-color: #fafafa;
+	border-width: 0px;
+	border-style: none;
+}
+QScrollBar:vertical
+{
+    background: #fafafa;
+    padding: 12px 3px 12px 3px;
+}
+QScrollBar::handle:vertical
+{
+    background: #c0c5c8;
+    border-radius: 2px; 
+}
+QScrollBar::handle:vertical:hover
+{
+    background: #acb1b4; 
+}
+QScrollBar::add-line:vertical
+{
+	height:12px;
+	width:12px;
+    border-image:url(:/icons/drop-arrow-down);
+    subcontrol-position:bottom;
+}
+QScrollBar::sub-line:vertical
+{
+    height:12px;
+	width:12px;
+    image:url(:/icons/drop-arrow-up);
+    subcontrol-position:top;
+}</string>
+    </property>
+    <property name="markdown">
+     <string>LYRICS_SET
+
+</string>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'微软雅黑'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;LYRICS_SET&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="widget_lfuni" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>145</y>
+      <width>30</width>
+      <height>210</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton 
+{
+	color: #000000;
+	background-color: #fafafa;
+	padding: 0px 3px 0px 0px;
+	border-width: 5px;
+	border-color: #fafafa;
+	border-right-color: #c8c8c8;
+	border-style: solid;
+	border-radius: 0px;
+}
+
+QPushButton:disabled 
+{
+	color: #0a0a0a;
+	background-color: #f0f0f0;
+	padding: 0px;
+	border-width: 0px;
+	border-color: #f0f0f0;
+	border-right-color: #c8c8c8;
+}
+
+QPushButton:hover
+{
+	background-color:#f5f8fa ;
+	border-color: #f5f8fa;
+	border-right-color: #c8c8c8;
+}
+QPushButton:focus
+ {
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-right-color: #c8c8c8;
+}
+
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-right-color: #c8c8c8;
+}
+
+QPushButton:checked {
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-right-color: #0064c8;
+}</string>
+    </property>
+    <widget class="QPushButton" name="pushButton_lyrics_ori">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>30</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>原</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_lyrics_tra">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>70</y>
+       <width>30</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>译</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_lyrics_rom">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>140</y>
+       <width>30</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>音</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_dowloadImg">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>121</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton 
+{
+	background-color: rgba(255, 255, 255, 0);
+	background-position: center;
+	background-repeat: norepeat;
+	border-width: 2px;
+	border-color: #c8c8c8;
+	border-style: solid;
+	border-radius: 0px;
+}
+
+QPushButton[isFinish=false]:hover
+{
+	border-color: #0064c8;
+	background-color: rgba(235, 240, 245, 200);
+	background-image: url(:/icons/download);
+}
+
+QPushButton[isFinish=true]:hover
+{
+	border-color: #0064c8;
+	background-color: rgba(235, 240, 245, 200);
+	background-image: url(:/icons/finish);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="isFinish" stdset="0">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QWidget" name="widget_rfuni" native="true">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>145</y>
+      <width>30</width>
+      <height>210</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton 
+{
+	color: #000000;
+	background-color: #fafafa;
+	background-origin: content;
+	background-position: top;
+	padding: 0px 0px 0px 3px;
+	border-width: 5px;
+	border-color: #fafafa;
+	border-left-color: #c8c8c8;
+	border-style: solid;
+	border-radius: 0px;
+}
+
+QPushButton:disabled 
+{
+	color: #0a0a0a;
+	background-color: #f0f0f0;
+	padding: 0px;
+	border-width: 0px;
+	border-color: #f0f0f0;
+	border-right-color: #c8c8c8;
+}
+
+QPushButton:hover
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-left-color: #c8c8c8;
+}
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-left-color: #0064c8;
+}</string>
+    </property>
+    <widget class="QPushButton" name="pushButton_lyrics_copy">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>30</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>复
+制</string>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QWidget" name="widget_rfunisub" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>70</y>
+       <width>30</width>
+       <height>140</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton 
+{
+	color: #000000;
+	background-color: #fafafa;
+	border-width: 5px;
+	border-color: #fafafa;
+	border-left-color: #c8c8c8;
+	border-style: solid;
+	border-radius: 0px;
+}
+
+QPushButton:disabled 
+{
+	color: #0a0a0a;
+	background-color: #f0f0f0;
+	border-width: 0px;
+	border-color: #f0f0f0;
+	border-left-color: #c8c8c8;
+}
+
+QPushButton:hover
+{
+	background-color:#f5f8fa ;
+	border-color: #f5f8fa;
+	border-left-color: #c8c8c8;
+}
+QPushButton:focus
+ {
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-left-color: #c8c8c8;
+}
+
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-left-color: #c8c8c8;
+}
+
+QPushButton:checked {
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-left-color: #0064c8;
+}</string>
+     </property>
+     <widget class="QPushButton" name="pushButton_lyrics_download">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>30</width>
+        <height>140</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>歌
+词
+下
+载
+选
+项</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="autoRepeat">
+       <bool>false</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+      <property name="isDownloadAll" stdset="0">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_mv">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>105</y>
+      <width>460</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 12pt &quot;Microsoft YaHei UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>MV: MVINFO</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="LUD.qrc"/>
+ </resources>
+ <connections/>
+</ui>

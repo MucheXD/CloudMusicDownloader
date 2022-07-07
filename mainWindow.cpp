@@ -3,13 +3,18 @@
 mainWindow::mainWindow(QWidget *parent)
     : QWidget(parent)
 {
+
+    //qMsgbox_info();
+
+
     ui_mainWindow.setupUi(this);
     connect(ui_mainWindow.btn_mainMenu_load, &QPushButton::clicked, this, &mainWindow::mainMenuChanged);
     connect(ui_mainWindow.btn_mainMenu_list, &QPushButton::clicked, this, &mainWindow::mainMenuChanged);
     connect(ui_mainWindow.btn_mainMenu_workList, &QPushButton::clicked, this, &mainWindow::mainMenuChanged);
     connect(ui_mainWindow.btn_mainMenu_settings, &QPushButton::clicked, this, &mainWindow::mainMenuChanged);
 
-    p_tag_list = new QLabel(ui_mainWindow.btn_mainMenu_list);
+
+    //p_tag_list = new QLabel(ui_mainWindow.btn_mainMenu_list);
     mainWindow::reUi();
     //test();
     //test();

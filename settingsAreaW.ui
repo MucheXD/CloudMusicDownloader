@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>settingsAreaW</class>
+ <widget class="QWidget" name="settingsAreaW">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>550</width>
+    <height>166</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+	background-color: #f5f8fa;
+	font: 11pt &quot;微软雅黑&quot;;
+}
+
+QLabel
+{
+	background-color: #f5f8fa;
+	color: #000000;
+	font: 11pt &quot;微软雅黑&quot;;
+}
+
+QLabel[style=&quot;subtext&quot;]
+{
+	background-color: #f5f8fa;
+	color: #808080;
+	font: 10pt &quot;微软雅黑&quot;;
+}
+
+QPushButton
+{
+	font: 10pt &quot;微软雅黑&quot;;
+	color: #000000;
+	background-color: #f0f3f5;
+	border-width: 2px;
+	border-color: #ebf0f5;
+	border-bottom-color: #d4dae1;
+	border-style: solid;
+	border-radius: 5px;
+	padding: 2px 5px 2px 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #f0f0f0;
+	border-color:  #f0f0f0;
+}
+
+QPushButton:hover
+{
+	background-color: #e7ebf0;
+	border-width: 2px;
+	border-color: #e2e7eb;
+	border-bottom-color: #cacdd2;
+	border-style: solid;
+	border-radius: 5px;
+}
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-bottom-color: #dce4eb;
+}
+
+QPushButton[style=&quot;highlight&quot;]
+{
+	color: #ffffff;
+	background-color: #0064c8;
+	border-width: 2px;
+	border-color: #146ec8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled[style=&quot;highlight&quot;]
+{
+	background-color: #c8c8c8;
+	border-color: #c8c8c8;
+}
+
+QPushButton:hover[style=&quot;highlight&quot;]
+{
+	background-color: #146ec8;
+	border-width: 2px;
+	border-color: #2778c8;
+	border-bottom-color: #004b96;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed[style=&quot;highlight&quot;] 
+{
+	background-color: #2778c8;
+	border-color: #2778c8;
+	border-bottom-color: #0064c8;
+}
+
+QLineEdit
+{
+	background-color: #fafafa;
+	padding: 0px 0px 0px 5px;
+	border-width: 2px;
+	border-color: #ebeef0;
+	border-style: solid;
+	border-radius: 5px;
+}
+QLineEdit: hover
+{
+	border-color: #dde2e6;
+}
+</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QWidget" name="group_work_savePath" native="true">
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="1" column="0">
+       <widget class="QLabel" name="text_work_savePath_title">
+        <property name="text">
+         <string>保存位置</string>
+        </property>
+        <property name="style" stdset="0">
+         <string notr="true">normal</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLineEdit" name="input_work_savePath"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QWidget" name="group_work_maxWorks_area" native="true">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0">
+       <layout class="QGridLayout" name="work_maxWorks_area">
+        <item row="2" column="1">
+         <layout class="QHBoxLayout" name="work_maxConvertings_area">
+          <item>
+           <widget class="QSpinBox" name="set_work_maxConvertings">
+            <property name="toolTip">
+             <string>设置同一时间下最大允许的转换工作线程数</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="work_maxConvertings_area_horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="work_maxDownloadings_area">
+          <item>
+           <widget class="QSpinBox" name="set_work_maxDownloadings">
+            <property name="toolTip">
+             <string>设置同一时间下最大允许的下载工作线程数</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="work_maxDownloadings_area_horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="text_work_maxConvertings_title">
+          <property name="toolTip">
+           <string>设置同一时间下最大允许的转换工作线程数</string>
+          </property>
+          <property name="text">
+           <string>最大同时转换数</string>
+          </property>
+          <property name="style" stdset="0">
+           <string notr="true">normal</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="text_work_maxDownloadings_title">
+          <property name="toolTip">
+           <string>设置同一时间下最大允许的下载工作线程数</string>
+          </property>
+          <property name="text">
+           <string>最大同时下载数</string>
+          </property>
+          <property name="style" stdset="0">
+           <string notr="true">normal</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
