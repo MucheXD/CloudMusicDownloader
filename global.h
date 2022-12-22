@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include <QString>
 
-const uint PROGRAMBUILDVER = 0xC0000045;
-const QString PROGRAMVERSION = "0.4.2";
+const uint PROGRAMBUILDVER = 0xD0000052;
+const QString PROGRAMVERSION = "0.5.0";
 
 
 struct USERINFO

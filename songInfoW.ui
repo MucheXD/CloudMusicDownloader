@@ -149,7 +149,7 @@ border-color: #c8c8c8;</string>
      <rect>
       <x>50</x>
       <y>140</y>
-      <width>541</width>
+      <width>581</width>
       <height>210</height>
      </rect>
     </property>
@@ -206,6 +206,8 @@ QScrollBar::sub-line:vertical
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'微软雅黑'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;LYRICS_SET&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
@@ -386,170 +388,6 @@ QPushButton[isFinish=true]:hover
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="widget_rfuni" native="true">
-    <property name="geometry">
-     <rect>
-      <x>590</x>
-      <y>145</y>
-      <width>30</width>
-      <height>210</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton 
-{
-	color: #000000;
-	background-color: #fafafa;
-	background-origin: content;
-	background-position: top;
-	padding: 0px 0px 0px 3px;
-	border-width: 5px;
-	border-color: #fafafa;
-	border-left-color: #c8c8c8;
-	border-style: solid;
-	border-radius: 0px;
-}
-
-QPushButton:disabled 
-{
-	color: #0a0a0a;
-	background-color: #f0f0f0;
-	padding: 0px;
-	border-width: 0px;
-	border-color: #f0f0f0;
-	border-right-color: #c8c8c8;
-}
-
-QPushButton:hover
-{
-	background-color: #ebf0f5;
-	border-color: #ebf0f5;
-	border-left-color: #c8c8c8;
-}
-QPushButton:pressed 
-{
-	background-color: #ebf0f5;
-	border-color: #ebf0f5;
-	border-left-color: #0064c8;
-}</string>
-    </property>
-    <widget class="QPushButton" name="pushButton_lyrics_copy">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>30</width>
-       <height>70</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>复
-制</string>
-     </property>
-     <property name="checkable">
-      <bool>false</bool>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-     <property name="autoExclusive">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QWidget" name="widget_rfunisub" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>70</y>
-       <width>30</width>
-       <height>140</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton 
-{
-	color: #000000;
-	background-color: #fafafa;
-	border-width: 5px;
-	border-color: #fafafa;
-	border-left-color: #c8c8c8;
-	border-style: solid;
-	border-radius: 0px;
-}
-
-QPushButton:disabled 
-{
-	color: #0a0a0a;
-	background-color: #f0f0f0;
-	border-width: 0px;
-	border-color: #f0f0f0;
-	border-left-color: #c8c8c8;
-}
-
-QPushButton:hover
-{
-	background-color:#f5f8fa ;
-	border-color: #f5f8fa;
-	border-left-color: #c8c8c8;
-}
-QPushButton:focus
- {
-	background-color: #ebf0f5;
-	border-color: #ebf0f5;
-	border-left-color: #c8c8c8;
-}
-
-QPushButton:pressed 
-{
-	background-color: #ebf0f5;
-	border-color: #ebf0f5;
-	border-left-color: #c8c8c8;
-}
-
-QPushButton:checked {
-	background-color: #ebf0f5;
-	border-color: #ebf0f5;
-	border-left-color: #0064c8;
-}</string>
-     </property>
-     <widget class="QPushButton" name="pushButton_lyrics_download">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>30</width>
-        <height>140</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>歌
-词
-下
-载
-选
-项</string>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
-      </property>
-      <property name="autoRepeat">
-       <bool>false</bool>
-      </property>
-      <property name="autoExclusive">
-       <bool>false</bool>
-      </property>
-      <property name="isDownloadAll" stdset="0">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
-   </widget>
    <widget class="QLabel" name="label_mv">
     <property name="geometry">
      <rect>
@@ -564,6 +402,74 @@ QPushButton:checked {
     </property>
     <property name="text">
      <string>MV: MVINFO</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_lyrics_copy">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>110</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>11</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton 
+{
+	color: #000000;
+	background-color: #f0f3f5;
+	border-width: 2px;
+	border-color: #ebf0f5;
+	border-bottom-color: #d4dae1;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:disabled 
+{
+	background-color: #f0f0f0;
+	border-color:  #f0f0f0;
+}
+
+QPushButton:hover
+{
+	background-color: #e7ebf0;
+	border-width: 2px;
+	border-color: #e2e7eb;
+	border-bottom-color: #cacdd2;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+QPushButton:pressed 
+{
+	background-color: #ebf0f5;
+	border-color: #ebf0f5;
+	border-bottom-color: #dce4eb;
+}r</string>
+    </property>
+    <property name="text">
+     <string>复制歌词</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>

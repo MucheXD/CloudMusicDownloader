@@ -110,7 +110,7 @@ QScrollBar::sub-line:vertical
    </property>
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>530</x>
      <y>45</y>
      <width>91</width>
      <height>30</height>
@@ -161,7 +161,7 @@ QPushButton:pressed
    </property>
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>430</x>
      <y>45</y>
      <width>90</width>
      <height>30</height>
@@ -212,10 +212,10 @@ QPushButton:pressed
    </property>
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>130</x>
      <y>45</y>
-     <width>91</width>
-     <height>31</height>
+     <width>90</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -280,7 +280,7 @@ QCheckBox::indicator:disabled:checked
    </property>
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>330</x>
      <y>45</y>
      <width>90</width>
      <height>30</height>
@@ -324,6 +324,87 @@ QPushButton:pressed
    <property name="text">
     <string>匹配信息</string>
    </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_lyrics">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>45</y>
+     <width>100</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox
+{
+	color: #000000;
+	background-color: #f0f3f5;
+	border-width: 2px;
+	border-color: #ebf0f5;
+	border-bottom-color: #d4dae1;
+	border-style: solid;
+	border-radius: 5px;
+}
+QComboBox::drop-down
+{
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 0px;
+	border: none;
+}
+QComboBox::down-arrow
+{
+	padding: 0px 32px 0px 0px;
+	image: url(:/icons/drop-arrow-down);
+}
+QComboBox::down-arrow:on
+{
+	image: url(:/icons/drop-arrow-up);
+}
+QComboBox QAbstractItemView
+{
+	background-color: #fafafa;
+	border-width: 2px;
+	border-color: #c0c5c8;
+	border-style: solid;
+	border-radius: 5px;
+	outline: 0px;
+}
+QComboBox QAbstractItemView::item
+{
+	color: #000000;
+	background-color: #fafafa;
+}
+QComboBox QAbstractItemView::item:hover
+{
+	background-color: #ebf2f5;
+}</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>  附词...</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>  附原文词</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>  附译文词</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>  附罗马音</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>  附全部</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources>

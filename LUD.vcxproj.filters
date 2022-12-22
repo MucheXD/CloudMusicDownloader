@@ -99,7 +99,7 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="更新说明.txt">
+    <Text Include="UpdateInfo.txt">
       <Filter>Debug</Filter>
     </Text>
   </ItemGroup>

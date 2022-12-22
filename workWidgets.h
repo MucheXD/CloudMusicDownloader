@@ -45,6 +45,7 @@ private:
 	void clearSearchResult(void);
 	void printSearchResult(int mode, std::vector<SONGINFO> sr_songInfo, bool isAdd);
 	void printSearchResult(int mode, std::vector<PLAYLISTINFO> sr_playList, bool isAdd);
+	void printSearchResult(int mode, std::vector<ALBUMINFO> sr_albumInfo, bool isAdd);
 	void printSearchResult(int mode = 0);
 	void showSearchResultDetailInfo(void);
 	void searchResultChoosed(void);
@@ -58,6 +59,7 @@ public:
 	int type;
 	SONGINFO songInfo;
 	PLAYLISTINFO playListInfo;
+	ALBUMINFO albumInfo;
 	QString localDirPath;
 	Ui::searchResultWClass ui_searchResultW;
 };
@@ -71,8 +73,6 @@ public:
 	void switchLyrics(void);
 	void quitInfoW(void);
 	void copyLyrics(void);
-	void u_setDownloadLyricBtn(int mode);
-	void downloadLyricBtnClicked(void);
 	void downloadBlurPicToFile(void);
 	int index;
 	int type;
@@ -99,6 +99,7 @@ public:
 	void addToDownload(void);
 	void showSearchResultDetailInfo(void);
 	void songInfoWindowExited(int index);
+	void changeLyricsDownload(void);
 	std::vector<SONGINFO> songList;
 private:
 	Ui::workWidget_list_Class ui_wList;
@@ -115,7 +116,7 @@ class songListW : public QWidget
 	Q_OBJECT
 public:
 	songListW(QWidget* parent = Q_NULLPTR);
-	void reUiInfo(void);//根据songInfo刷新Ui界面的信息
+	void reUiInfo(bool needRefTitle = true);//根据songInfo刷新Ui界面的信息
 	int numInSongList;
 	SONGINFO songInfo;
 	Ui::songListWClass ui_songListW;

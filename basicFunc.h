@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QDir>
 #include <QMouseEvent>
+#include <vector>
 #include "ui_msgbox.h"
 #include "global.h"
 #import "winhttpcom.dll"
@@ -29,8 +30,9 @@ QString qDID_artistsStrIn_songInfo(std::vector<USERINFO> artistList, int maxLeng
 //void qMsgbox_info(void);
 std::vector<PLAYLISTINFO> searchInfoParser_PlayList(QString rawResult);
 std::vector<SONGINFO> searchInfoParser_Songs(QString rawResult);//type指定兼容模板 =1搜索结果来源 =2信息获取来源(我也不知道为什么网易云两个模板不一样)
-std::vector<SONGINFO> songsIn_PlayList(QString rawPlayListInfo);
-SONGINFO fillSongInfo(SONGINFO rawSongInfo);
+std::vector<ALBUMINFO> searchInfoParser_Album(QString rawAlbumInfo);
+std::vector<SONGINFO> songsIn_Album(ALBUMINFO from);
+void fillSongInfo(SONGINFO *rawSongInfo);
 std::vector<SONGINFO> completeSongsInfo(std::vector<SONGINFO> rawSongInfoList);
 
 class Network

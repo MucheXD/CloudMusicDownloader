@@ -126,9 +126,10 @@ QString qDID_artistsStrIn_songInfo(std::vector<USERINFO> artistList, int maxLeng
 	int nAdd = 0;
 	while (nAdd < artistList.size() && (result.toLocal8Bit().length() + artistList.at(nAdd).name.toLocal8Bit().length() <= maxLength || nAdd<1))
 	{
-		result.append(artistList.at(nAdd).name + "  ");
+		result.append(artistList.at(nAdd).name + ", ");
 		nAdd += 1;
 	}
+	result = result.left(result.length() - 2);
 	if (artistList.size() - nAdd > 0)//如果还有更多作者但已经超过长度
 		result.append(QString(" 等%1位").arg(artistList.size()));
 	return result;
@@ -211,7 +212,7 @@ QString Network::getHttpHeader(QString header)
 
 std::vector<PLAYLISTINFO> searchInfoParser_PlayList(QString rawResult)
 {
-	std::vector<PLAYLISTINFO> result;
+	std::vector<PLAYLISTINFO> retResult;
 	int nPos = 0;
 	nPos = qText_indexOfEnd(rawResult, "playlists", 0);
 	nPos = qText_indexOfEnd(rawResult, "[", nPos);
@@ -236,9 +237,9 @@ std::vector<PLAYLISTINFO> searchInfoParser_PlayList(QString rawResult)
 		playListInfo.bookCount = qText_Between(subRawData, "\"bookCount\":", ",", sub_creatorInfoEndPos);
 		playListInfo.description = qText_Between(subRawData, "\"description\":\"", "\",", sub_creatorInfoEndPos);
 		nPos = subcEndPos;
-		result.push_back(playListInfo);//压入当前子存储
+		retResult.push_back(playListInfo);//压入当前子存储
 	}
-	return result;//返回格式化后的数据
+	return retResult;//返回格式化后的数据
 }
 
 std::vector<SONGINFO> searchInfoParser_Songs(QString rawResult)
@@ -286,107 +287,101 @@ std::vector<SONGINFO> searchInfoParser_Songs(QString rawResult)
 	return result;//返回格式化后的数据
 }
 
-std::vector<SONGINFO> songsIn_PlayList(QString rawPlayListInfo)
+std::vector<ALBUMINFO> searchInfoParser_Album(QString rawAlbumInfo)
 {
-	//TODO 此处可以增加容错性 正常情况code=200 但经常性服务器繁忙
-	std::vector<SONGINFO> result;
+	std::vector<ALBUMINFO> result;
+	if (rawAlbumInfo.indexOf("\"albumCount\":0") != -1)
+		return result;
 	int nPos = 0;
-	nPos = qText_indexOfEnd(rawPlayListInfo,"}",0);//定位到第一个括回 跳过创建者及以前的内容
-	nPos = qText_indexOfEnd(rawPlayListInfo, "\"tracks\":", nPos);
-	while (rawPlayListInfo.indexOf("]",nPos)-nPos!=0)
+	nPos = qText_indexOfEnd(rawAlbumInfo,"\"albums\"",0);//定位到第一个括回 跳过创建者及以前的内容
+	nPos = qText_indexOfEnd(rawAlbumInfo, "[", nPos);
+	while (true)
 	{
 		nPos += 1;
-		SONGINFO songInfo;
-		songInfo.isHaveLocal = false;
-		songInfo.isLocalOnly = false;
-		songInfo.name = qText_Between(rawPlayListInfo, "\"name\":\"", "\",", nPos);
-		songInfo.id = qText_Between(rawPlayListInfo, "\"id\":", ",", nPos);
-		//TODO 此处代码与searchInfoParser_Songs中重复, 考虑封装一个函数
-		nPos = qText_indexOfEnd(rawPlayListInfo, "\"artists\":", nPos);
+		ALBUMINFO albumInfo;
+		albumInfo.name = qText_Between(rawAlbumInfo, "\"name\":\"", "\",", nPos);
+		albumInfo.id = qText_Between(rawAlbumInfo, "\"id\":", ",", nPos);
+		albumInfo.blurPicUrl = qText_Between(rawAlbumInfo, "\"blurPicUrl\":\"", "\",", nPos);
+		albumInfo.description = qText_Between(rawAlbumInfo, "\"description\":\"", "\",", nPos);
+		nPos = qText_indexOfEnd(rawAlbumInfo, "\"artists\":", nPos);
 		std::vector<USERINFO> artists;
-		while (rawPlayListInfo.indexOf("]", nPos)-nPos != 0)
+		while (rawAlbumInfo.indexOf("]", nPos)-nPos != 0)
 		{
 			nPos += 1;
 			USERINFO artist;
-			int subStr_artist_endPos = qText_indexOfEnd(rawPlayListInfo, "}", nPos);
-			QString subStr_artist = qText_Between(rawPlayListInfo, "{", "}", nPos);
+			int subStr_artist_endPos = qText_indexOfEnd(rawAlbumInfo, "}", nPos);
+			QString subStr_artist = qText_Between(rawAlbumInfo, "{", "}", nPos);
 			artist.name = qText_Between(subStr_artist, "\"name\":\"", "\",", 0);
 			artist.id = qText_Between(subStr_artist, "\"id\":", ",", 0);
 			artists.push_back(artist);
 			nPos = subStr_artist_endPos;
 		}
-		songInfo.artists = artists;
-		//nPos = qText_indexOfEnd(rawPlayListInfo, "\"album\":", nPos);
-		//nPos = qText_indexOfEnd(rawPlayListInfo, "}", nPos);//跳过所属专辑->作者名
-		//nPos = qText_indexOfEnd(rawPlayListInfo, "\"artists\":[", nPos);
-		//nPos = qText_indexOfEnd(rawPlayListInfo, "],", nPos);//跳过所属专辑->作者列表
-		//nPos = qText_indexOfEnd(rawPlayListInfo, "}", nPos);//跳过所属专辑(对上面几行全部是为了跳过这个)
-		//因为发现全文 "duration": 只有一个所以直接定位到那里, 这个叫隔空tp(bs
-		songInfo.duration = qText_Between(rawPlayListInfo, "\"duration\":", ",", nPos);
-		nPos = qText_indexOfEnd(rawPlayListInfo, "\"duration\":", nPos);
-		songInfo.mvid = qText_Between(rawPlayListInfo, "\"mvid\":", ",", nPos);
-		result.push_back(songInfo);
-		nPos = qText_indexOfEnd(rawPlayListInfo, "\"mvid\":", nPos);
-		nPos = qText_indexOfEnd(rawPlayListInfo, "\"lMusic\":", nPos);
-		nPos = qText_indexOfEnd(rawPlayListInfo, "}", nPos);
-		nPos = qText_indexOfEnd(rawPlayListInfo, "}", nPos);
+		albumInfo.artists = artists;
+		nPos = qText_indexOfEnd(rawAlbumInfo, "},", nPos);
+		result.push_back(albumInfo);
+		if (qText_indexOfEnd(rawAlbumInfo, "code", nPos) - nPos <= 10)
+			break;
 	}
 	return result;
 }
 
-SONGINFO fillSongInfo(SONGINFO rawSongInfo)
+std::vector<SONGINFO> songsIn_Album(ALBUMINFO from)
 {
-	SONGINFO result = rawSongInfo;
-	QString getBlurPicUrl = QString("http://music.163.com/api/song/detail/?ids=[%1]").arg(rawSongInfo.id);
+	QString albumInfo = qNetwork_getHttpText("GET", QString("http://music.163.com/api/album/%1").arg(from.id), false);
+	return searchInfoParser_Songs(qText_Between(albumInfo, "\"album\":{", "}],\"paid\""));
+}
+
+void fillSongInfo(SONGINFO *rawSongInfo)
+{
+	QString getBlurPicUrl = QString("http://music.163.com/api/song/detail/?ids=[%1]").arg(rawSongInfo->id);
 	QString fullInfoText = qNetwork_getHttpText("GET", getBlurPicUrl, false);
-	result.blurPicUrl = qText_Between(fullInfoText, "blurPicUrl\":\"", "\"", 0);
-	QString getLyricsUrl = QString("https://music.163.com/api/song/lyric?id=%1&lv=1&tv=1&rv=1").arg(rawSongInfo.id);
+	rawSongInfo->blurPicUrl = qText_Between(fullInfoText, "blurPicUrl\":\"", "\"", 0);
+	QString getLyricsUrl = QString("https://music.163.com/api/song/lyric?id=%1&lv=1&tv=1&rv=1").arg(rawSongInfo->id);
 	QString fullLyricsText = qNetwork_getHttpText("GET", getLyricsUrl, false);
 	fullLyricsText.replace("\\n", "\n");
 	int nRp = 0;
 	nRp = qText_indexOfEnd(fullLyricsText, "\"lrc\"", 0);
 	if (nRp != -1)
-		result.lyrics.lver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
+		rawSongInfo->lyrics.lver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
 	else
-		result.lyrics.isHaveLver = false;
+		rawSongInfo->lyrics.isHaveLver = false;
 	nRp = qText_indexOfEnd(fullLyricsText, "\"tlyric\"", 0);
 	if (nRp != -1)
-		result.lyrics.tver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
+		rawSongInfo->lyrics.tver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
 	else
-		result.lyrics.isHaveTver = false;
+		rawSongInfo->lyrics.isHaveTver = false;
 	nRp = qText_indexOfEnd(fullLyricsText, "\"romalrc\"", 0);
 	if (nRp != -1)
-		result.lyrics.rver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
+		rawSongInfo->lyrics.rver = qText_Between(fullLyricsText, "\"lyric\":\"", "\"", nRp);
 	else
-		result.lyrics.isHaveRver = false;
-	if (rawSongInfo.mvid != "0")
+		rawSongInfo->lyrics.isHaveRver = false;
+	if (rawSongInfo->mvid != "0")
 	{
-		QString mvInfoText = qNetwork_getHttpText("GET", QString("http://music.163.com/api/mv/detail?id=%1&type=mp4").arg(rawSongInfo.mvid), false);
-		result.mv.title = qText_Between(mvInfoText, "\"name\":\"", "\"", 0);
-		if (result.mv.title == "")
-			result.mv.title = "点击前往MV";
+		QString mvInfoText = qNetwork_getHttpText("GET", QString("http://music.163.com/api/mv/detail?id=%1&type=mp4").arg(rawSongInfo->mvid), false);
+		rawSongInfo->mv.title = qText_Between(mvInfoText, "\"name\":\"", "\"", 0);
+		if (rawSongInfo->mv.title == "")
+			rawSongInfo->mv.title = "点击前往MV";
 		nRp = qText_indexOfEnd(mvInfoText, "\"brs\":", 0);
 		if (nRp != -1)
 		{
 			if (mvInfoText.indexOf("\"1080\":\"") != -1)
-				result.mv.url = qText_Between(mvInfoText, "\"1080\":\"", "\"", nRp);
+				rawSongInfo->mv.url = qText_Between(mvInfoText, "\"1080\":\"", "\"", nRp);
 			else if (mvInfoText.indexOf("\"720\":\"") != -1)
-				result.mv.url = qText_Between(mvInfoText, "\"720\":\"", "\"", nRp);
+				rawSongInfo->mv.url = qText_Between(mvInfoText, "\"720\":\"", "\"", nRp);
 			else if (mvInfoText.indexOf("\"480\":\"") != -1)
-				result.mv.url = qText_Between(mvInfoText, "\"480\":\"", "\"", nRp);
+				rawSongInfo->mv.url = qText_Between(mvInfoText, "\"480\":\"", "\"", nRp);
 			else if (mvInfoText.indexOf("\"360\":\"") != -1)
-				result.mv.url = qText_Between(mvInfoText, "\"360\":\"", "\"", nRp);
+				rawSongInfo->mv.url = qText_Between(mvInfoText, "\"360\":\"", "\"", nRp);
 			else if (mvInfoText.indexOf("\"240\":\"") != -1)
-				result.mv.url = qText_Between(mvInfoText, "\"240\":\"", "\"", nRp);
+				rawSongInfo->mv.url = qText_Between(mvInfoText, "\"240\":\"", "\"", nRp);
 			else
-				result.mv.isAvailable = false;
+				rawSongInfo->mv.isAvailable = false;
 		}
 		else
-			result.mv.isAvailable = false;
+			rawSongInfo->mv.isAvailable = false;
 	}
 	else
-		result.mv.isAvailable = false;
-	return result;
+		rawSongInfo->mv.isAvailable = false;
 }
 
 std::vector<SONGINFO> completeSongsInfo(std::vector<SONGINFO> rawSongInfoList)
