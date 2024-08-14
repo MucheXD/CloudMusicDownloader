@@ -34,6 +34,7 @@ std::vector<ALBUMINFO> searchInfoParser_Album(QString rawAlbumInfo);
 std::vector<SONGINFO> songsIn_Album(ALBUMINFO from);
 void fillSongInfo(SONGINFO *rawSongInfo);
 std::vector<SONGINFO> completeSongsInfo(std::vector<SONGINFO> rawSongInfoList);
+bool compareByLocalCreateTimeSec(const SONGINFO& a, const SONGINFO& b);
 
 class Network
 {

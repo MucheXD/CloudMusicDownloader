@@ -57,6 +57,9 @@
     <ClInclude Include="global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="workWidget_load.ui">
@@ -104,8 +107,13 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\x64\Debug\Result\THANK U FOR.mp3">
-      <Filter>Form Files</Filter>
-    </Media>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\icons\app_logo.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

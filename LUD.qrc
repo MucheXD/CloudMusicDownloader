@@ -11,5 +11,6 @@
         <file alias="arrow-right">Resource/icons/arrow-right.svg</file>
         <file alias="download">Resource/icons/download.svg</file>
         <file alias="finish">Resource/icons/finish.svg</file>
+        <file>Resource/icons/app_logo.png</file>
     </qresource>
 </RCC>

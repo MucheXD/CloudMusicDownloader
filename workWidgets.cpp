@@ -78,7 +78,7 @@ void workWidget_load::getSearchInfo(void)
 			isAdd = true;
 		}
         const QString searchResultText = qNetwork_getHttpText("GET", QString("http://music.163.com/api/search/get/web?s=%1&type=%2&offset=%3&total=true&limit=10")
-            .arg(ui_wLoad.searchText->text().toUtf8().toPercentEncoding())
+            .arg(ui_wLoad.searchText->text().toUtf8().toPercentEncoding().data())
             .arg(mode)
             .arg(offset), false);
         if (searchResultText == "")
@@ -141,7 +141,7 @@ void workWidget_load::printSearchResult(int mode,std::vector<SONGINFO> sr_songIn
                 widget->ui_searchResultW.text_subTitle->width(),
                 widget->ui_searchResultW.text_subTitle->height());
             TIME songDuration = qTime_formatFromMs(sr_songInfo.at(nowPrtItem).duration.toInt(), 2);
-            widget->ui_searchResultW.text_subTitle->setText(QString("%1'%2''").arg(songDuration.m).arg(songDuration.s));
+            widget->ui_searchResultW.text_subTitle->setText(QString("%1'%2\"").arg(songDuration.m).arg(songDuration.s));
             widget->ui_searchResultW.text_creator->setText(QString("%1").arg(qDID_artistsStrIn_songInfo(sr_songInfo.at(nowPrtItem).artists, 36)));
             widget->ui_searchResultW.text_creator->adjustSize();
             if (widget->ui_searchResultW.text_creator->width() > 350)
@@ -156,6 +156,8 @@ void workWidget_load::printSearchResult(int mode,std::vector<SONGINFO> sr_songIn
                 widget->ui_searchResultW.text_data->setText("");
             widget->ui_searchResultW.text_data->adjustSize();
             widget->ui_searchResultW.text_ID->setText(QString("#%1").arg(sr_songInfo.at(nowPrtItem).id));
+            if (sr_songInfo.at(nowPrtItem).isFee)
+                widget->ui_searchResultW.btn_choose->setText("选择试听");
             widget->type = mode;
             widget->songInfo = sr_songInfo.at(nowPrtItem);
             connect(widget->ui_searchResultW.btn_moreInfo, &QPushButton::clicked, this, &workWidget_load::showSearchResultDetailInfo);
@@ -343,22 +345,26 @@ void workWidget_load::searchResultChoosed(void)
         const QStringList ucFileFilter = { "*.uc", "*.UC", "*.uc!", "*.UC!" };
         QDir searchDir;
         searchDir.setPath(senderCopy_searchResultW->localDirPath);
-        QStringList ucFileList = searchDir.entryList(ucFileFilter, QDir::Files | QDir::Readable, QDir::Name);
+        searchDir.setSorting(QDir::SortFlag::Time);
+        QFileInfoList ucFileList = searchDir.entryInfoList(ucFileFilter, QDir::Files | QDir::Readable, QDir::Name);
         int nAdd = 0;
         while (nAdd < ucFileList.count())
         {
             SONGINFO song;
+            QString currentFileName = ucFileList.at(nAdd).fileName();
             song.isLocalOnly = true;
             song.isHaveLocal = true;
-            song.localPath = searchDir.path() + "/" + ucFileList.at(nAdd);
-            song.name = ucFileList.at(nAdd);
-            if (ucFileList.at(nAdd).left(ucFileList.at(nAdd).indexOf("-")).toULongLong() != 0)
-                song.id = QString::number(ucFileList.at(nAdd).left(ucFileList.at(nAdd).indexOf("-")).toULongLong());
+            song.localPath = searchDir.path() + "/" + currentFileName;
+            song.name = currentFileName;
+            song.localCreateTimeSec = ucFileList.at(nAdd).lastRead().secsTo(QDateTime::currentDateTime());
+            if (currentFileName.left(currentFileName.indexOf("-")).toULongLong() != 0)
+                song.id = QString::number(currentFileName.left(currentFileName.indexOf("-")).toULongLong());
             else
                 song.id = "";
             append_songs.push_back(song);
             nAdd += 1;
         }
+        std::sort(append_songs.begin(), append_songs.end(), compareByLocalCreateTimeSec);
     }
     workWidget_list* listWidget = this->parent()->findChild<workWidget_list*>();
     if (listWidget == NULL)
@@ -488,7 +494,7 @@ workWidget_list::workWidget_list(QWidget* parent)
     connect(ui_wList.checkBox_chooseAll, &QCheckBox::clicked, this, &workWidget_list::chooseAllBoxClicked);
     connect(ui_wList.btn_getSongInfo, &QPushButton::clicked, this, &workWidget_list::getLocalSongInfo);
     connect(ui_wList.btn_startDownload, &QCheckBox::clicked, this, &workWidget_list::addToDownload);
-    connect(ui_wList.comboBox_lyrics, &QComboBox::currentIndexChanged, this, &workWidget_list::changeLyricsDownload);
+    connect(ui_wList.comboBox_lyrics, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &workWidget_list::changeLyricsDownload);
 }
 void workWidget_list::appendSongList(std::vector<SONGINFO> nAppend_songList)
 {
@@ -715,17 +721,37 @@ void songListW::reUiInfo(bool needRefTitle)
         - ui_songListW.text_title->x() - 10
         - ui_songListW.btn_choose->width() - 70;
     if (songInfo.isLocalOnly == true)
-        ui_songListW.text_artists->setText("本地缓存文件");
+    {
+        ui_songListW.text_artists->setText("本地缓存");
+        if (songInfo.localCreateTimeSec < 300)
+        {
+            ui_songListW.text_subTitle->setStyleSheet(ui_songListW.text_subTitle->styleSheet() + "\ncolor:#0064c8;");
+        }
+        if (songInfo.localCreateTimeSec < 3600)
+        {
+            ui_songListW.text_subTitle->setText(QString("%1分钟前").arg(songInfo.localCreateTimeSec / 60));
+        }
+        else if (songInfo.localCreateTimeSec < 86400)
+        {
+            ui_songListW.text_subTitle->setText(QString("%1小时前").arg(songInfo.localCreateTimeSec / 3600));
+        }
+        else
+        {
+            ui_songListW.text_subTitle->setText(QString("%1天前").arg(songInfo.localCreateTimeSec / 86400));
+        }
+            
+    }
     else
         ui_songListW.text_artists->setText(QString("%1").arg(qDID_artistsStrIn_songInfo(songInfo.artists, spaceLeftTo_text_artists / 10)));
     ui_songListW.text_artists->adjustSize();
     if (ui_songListW.text_artists->width() > spaceLeftTo_text_artists)
         ui_songListW.text_artists->setFixedWidth(spaceLeftTo_text_artists);
     TIME songDuration = qTime_formatFromMs(songInfo.duration.toInt(), 2);
-    ui_songListW.text_subTitle->setText(QString("%1'%2''").arg(songDuration.m).arg(songDuration.s));
+    if (!songInfo.isLocalOnly)
+        ui_songListW.text_subTitle->setText(QString("%1'%2\"").arg(songDuration.m).arg(songDuration.s));
     ui_songListW.text_subTitle->adjustSize();
-    if (songInfo.isLocalOnly == true)
-        ui_songListW.text_subTitle->hide();
+    //if (songInfo.isLocalOnly == true)
+        //ui_songListW.text_subTitle->hide();
     if (ui_songListW.text_subTitle->width() > 60)
         ui_songListW.text_subTitle->setFixedWidth(60);
 }
@@ -831,7 +857,7 @@ void workWidget_workList::startWork(int index)
         downloader->id = workInfoItem->workInfo.songInfo.id;
         downloader->downloadUrl = downloadUrl;
         //TODO 这里默认了分块大小(1MB) 可以允许用户自定义
-        downloader->savePath = QApplication::applicationDirPath() + "/Result" + "/" + workInfoItem->workInfo.songInfo.name.replace(QRegularExpression("[\\/:*?<>|\"]"), "") + " - " + qDID_artistsStrIn_songInfo(workInfoItem->workInfo.songInfo.artists, 64) + ".mp3";
+        downloader->savePath = QApplication::applicationDirPath() + "/Result" + "/" + workInfoItem->workInfo.songInfo.name.replace(QRegularExpression("[\\\\/:*?<>|\"]"), "") + " - " + qDID_artistsStrIn_songInfo(workInfoItem->workInfo.songInfo.artists, 64) + ".mp3";
         connect(downloader, &thread_downloader::finishWork, this, &workWidget_workList::workFinished);
         connect(downloader, &thread_downloader::reProgress, this, &workWidget_workList::reWorkProgress);
         downloader->start();
@@ -890,7 +916,7 @@ void workWidget_workList::workFinished(int index , int code)
     {
         fillSongInfo(&workInfoItem->workInfo.songInfo);
         downloadLyrics(workInfoItem->workInfo.songInfo.lyrics.needDownload,
-            workInfoItem->workInfo.savePath + "/" + workInfoItem->workInfo.songInfo.name.replace(QRegularExpression("[\\/:*?<>|\"]"), "") + " - " + qDID_artistsStrIn_songInfo(workInfoItem->workInfo.songInfo.artists, 64) + ".lrc",
+            workInfoItem->workInfo.savePath + "/" + workInfoItem->workInfo.songInfo.name.replace(QRegularExpression("[\\\\/:*?<>|\"]"), "") + " - " + qDID_artistsStrIn_songInfo(workInfoItem->workInfo.songInfo.artists, 64) + ".lrc",
             workInfoItem->workInfo.songInfo.lyrics);
     }
     if (workInfoItem->workInfo.workStatus.type == 1)

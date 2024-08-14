@@ -25,9 +25,14 @@
   <property name="windowTitle">
    <string>LUD - Get the songs you like (￣▽￣)/</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="LUD.qrc">
+    <normaloff>:/icons/Resource/icons/app_logo.png</normaloff>:/icons/Resource/icons/app_logo.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: #f5f8fa;
-font: 11pt &quot;微软雅黑&quot;;</string>
+font: 11pt &quot;微软雅黑&quot;;
+color: #000000;</string>
   </property>
   <widget class="QWidget" name="widget_mainMenu" native="true">
    <property name="geometry">
@@ -212,13 +217,14 @@ QPushButton:checked {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 700 14pt &quot;微软雅黑&quot;;</string>
+     <string notr="true">font: 700 14pt &quot;微软雅黑&quot;;
+color: #000000;</string>
     </property>
     <property name="text">
      <string>LUD - Netease Cloud Music Downloader</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="text_subTitle">
@@ -231,7 +237,8 @@ QPushButton:checked {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 10pt &quot;微软雅黑&quot;;</string>
+     <string notr="true">font: 10pt &quot;微软雅黑&quot;;
+color: #000000;</string>
     </property>
     <property name="text">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -241,10 +248,10 @@ hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'微软雅黑'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;V0.5.0 - By MucheXD&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;V0.6.0 - By MucheXD&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
   </widget>

@@ -1,9 +1,8 @@
 ﻿#pragma once
 #include <QString>
 
-const uint PROGRAMBUILDVER = 0xD0000052;
-const QString PROGRAMVERSION = "0.5.0";
-
+const uint PROGRAMBUILDVER = 0xD0000060;
+const QString PROGRAMVERSION = "0.6.0";
 
 struct USERINFO
 {
@@ -29,7 +28,6 @@ struct ALBUMINFO
 	std::vector<USERINFO> artists;
 	QString blurPicUrl;
 };
-
 struct LYRIC
 {
 	bool isHaveLver = true;
@@ -42,19 +40,19 @@ struct LYRIC
 
 	int needDownload = 0;//0=不附加下载,1/2/3=附加下载l/t/r,4=附加下载全部
 };
-
 struct MVINFO
 {
 	bool isAvailable = true;
 	QString title;
 	QString url;
 };
-
 struct SONGINFO
 {
 	bool isLocalOnly;
 	bool isHaveLocal;
+	bool isFee;
 	QString localPath;
+	int32_t localCreateTimeSec;
 
 	QString id;
 	QString name;
@@ -73,7 +71,6 @@ struct TIME
 	short s;
 	short ms;
 };
-
 struct WORKSTATUS
 {
 	//code=-3 无法下载文件主体或下载中断

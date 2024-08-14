@@ -145,7 +145,7 @@ QString qDID_artistsStrIn_songInfo(std::vector<USERINFO> artistList, int maxLeng
 
 Network::Network()
 {
-	sendBody = NULL;
+	sendBody = "";
 	HRESULT isSuccessedCheck = CoInitialize(NULL);
 	if (FAILED(isSuccessedCheck))
 	{
@@ -274,6 +274,10 @@ std::vector<SONGINFO> searchInfoParser_Songs(QString rawResult)
 		songInfo.duration = qText_Between(rawResult, "\"duration\":", ",", nPos);
 		nPos = qText_indexOfEnd(rawResult, "\"duration\":", nPos);
 		songInfo.mvid = qText_Between(rawResult, "\"mvid\":", ",", nPos);
+		if (qText_Between(rawResult, "\"fee\":", ",", nPos) == "1")
+			songInfo.isFee = true;
+		else
+			songInfo.isFee = false;
 		result.push_back(songInfo);
 		nPos = qText_indexOfEnd(rawResult, "\"mvid\":", nPos);
 		nPos = qJson_findCurrentEnd(rawResult, nPos);
@@ -432,8 +436,8 @@ std::vector<SONGINFO> completeSongsInfo(std::vector<SONGINFO> rawSongInfoList)
 thread_downloader::thread_downloader()
 {
 	//初始化内存数据
-	downloadUrl = NULL;
-	savePath = NULL;
+	downloadUrl = "";
+	savePath = "";
 	bufferSize = 409600;//默认缓存大小400KB
 	index = -1;
 }
@@ -492,8 +496,8 @@ void thread_downloader::run(void)
 thread_converter::thread_converter()
 {
 	//初始化内存数据
-	filePath = NULL;
-	savePath = NULL;
+	filePath = "";
+	savePath = "";
 	bufferSize = 1048576;//默认缓存大小1MB
 	index = -1;
 }
@@ -548,6 +552,11 @@ void thread_converter::run(void)
 	}
 	resultFile.close();//写入文件并关闭文件
 	emit finishWork(index, 200);//发射完成信号
+}
+
+bool compareByLocalCreateTimeSec(const SONGINFO& a, const SONGINFO& b)
+{
+	return a.localCreateTimeSec < b.localCreateTimeSec;
 }
 
 //msgBox::msgBox(QDialog* parent)
